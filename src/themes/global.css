@@ -16,3 +16,7 @@
 body {
   font-family: SUIT Variable;
 }
+
+input {
+  outline: none;
+}
