@@ -2,6 +2,7 @@ import Chip from '@/components/Chip/Chip';
 import ChipGroup from '@/components/Chip/ChipGroup';
 import OXButtonGroup from '@/components/OXButtonGroup';
 import Radio from '@/components/Radio';
+import Switch from '@/components/Switch';
 import TextField, { TextFieldRef } from '@/components/TextField';
 import Validator from '@/utils/Validator';
 import { useRef, useState } from 'react';
@@ -40,6 +41,11 @@ const StageComponentsPage = () => {
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', rowGap: '30px' }}>
+      <div style={{ display: 'flex', columnGap: '10px' }}>
+        <Switch isClicked={OX || false} onClick={() => setOX(!OX)} />
+        <Switch disabled isClicked={OX || false} />
+      </div>
+
       <div style={{ display: 'flex', columnGap: '10px' }}>
         <Radio isClicked={OX || false} onClick={() => setOX(!OX)} />
         <Radio disabled isClicked={OX || false} />
