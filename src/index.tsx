@@ -1,13 +1,23 @@
-import React, { useState } from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
+import '@/themes/global.css';
 import App from './App';
+import { createRoot } from 'react-dom/client';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import TypographyPage from './pages/TypographyPage';
+import { GlobalContainer } from './components/Layout/GlobalContainer';
 
-const root = ReactDOM.createRoot(
-  document.getElementById('root') as HTMLElement,
-);
-root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <App />,
+  },
+  {
+    path: '/typography',
+    element: <TypographyPage />,
+  },
+]);
+
+createRoot(document.getElementById('root') as HTMLElement).render(
+  <GlobalContainer>
+    <RouterProvider router={router} />,
+  </GlobalContainer>,
 );
