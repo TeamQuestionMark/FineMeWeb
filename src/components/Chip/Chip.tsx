@@ -7,17 +7,18 @@ import { transitionCss } from '@/themes/transition';
 interface ChipProps extends PropsWithChildren {
   isChecked: boolean;
   children: string;
+  disabled?: boolean;
   onClick: (
     value: string,
     e?: React.MouseEvent<HTMLInputElement, MouseEvent>,
   ) => void;
 }
 
-const StyledChip = styled.div<{ checked: boolean }>`
+const StyledChip = styled.div<{ checked: boolean; disabled?: boolean }>`
   border-radius: 36px;
   border: 2px ${COLORS.gray300} solid;
   padding: 8px 16px;
-  background-color: ${COLORS.gray50};
+  background-color: ${COLORS.white};
   width: fit-content;
   cursor: pointer;
   ${transitionCss}
@@ -28,18 +29,25 @@ const StyledChip = styled.div<{ checked: boolean }>`
     border-color: ${COLORS.brandColor500};
     background-color: ${COLORS.brandColor300};
   `};
+
+  ${({ disabled }) =>
+    disabled &&
+    `
+    background-color: ${COLORS.gray50};
+    cursor: not-allowed;
+  `};
 `;
 
-const Chip = ({ onClick, isChecked, children }: ChipProps) => {
+const Chip = ({ onClick, isChecked, children, disabled }: ChipProps) => {
   const handleClick = useCallback<MouseEventHandler<HTMLInputElement>>(
     e => {
-      onClick(children, e);
+      !disabled && onClick(children, e);
     },
-    [children, onClick],
+    [children, disabled, onClick],
   );
 
   return (
-    <StyledChip checked={isChecked} onClick={handleClick}>
+    <StyledChip disabled={disabled} checked={isChecked} onClick={handleClick}>
       <Body1 color={isChecked ? 'brandColor800' : 'gray600'}>{children}</Body1>
     </StyledChip>
   );

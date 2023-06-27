@@ -29,7 +29,12 @@ const StageComponentsPage = () => {
     <div>
       <ChipGroup>
         {Object.entries(chipInputs).map(([label, isChecked]) => (
-          <Chip key={label} onClick={handleClickChip} isChecked={isChecked}>
+          <Chip
+            key={label}
+            onClick={handleClickChip}
+            isChecked={isChecked}
+            disabled={label === '사원증'}
+          >
             {label}
           </Chip>
         ))}
