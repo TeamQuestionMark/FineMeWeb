@@ -37,7 +37,7 @@ const StageComponentsPage = () => {
     setText(e.currentTarget.value);
   };
   return (
-    <div>
+    <div style={{ display: 'flex', flexDirection: 'column', rowGap: '30px' }}>
       <TextField
         ref={inputRef}
         label="이름"
@@ -46,6 +46,14 @@ const StageComponentsPage = () => {
         onInput={handleChangeInput}
         validator={validator}
         placeholder="이름을 입력해주세요"
+      />
+      <TextField
+        ref={inputRef}
+        type="date"
+        label="생년월일"
+        id="birth"
+        value={text}
+        onInput={handleChangeInput}
       />
       <ChipGroup>
         {Object.entries(chipInputs).map(([label, isChecked]) => (

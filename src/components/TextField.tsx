@@ -3,6 +3,7 @@ import Validator from '@/utils/Validator';
 import React, {
   ChangeEventHandler,
   Dispatch,
+  HTMLInputTypeAttribute,
   SetStateAction,
   useCallback,
   useImperativeHandle,
@@ -13,7 +14,10 @@ import styled from 'styled-components';
 import { Body4 } from './Typography';
 import { typographyCss } from './Typography/styles';
 
-const StyledInput = styled.div<{ error: boolean }>`
+const StyledInput = styled.div<{
+  error: boolean;
+  inputType?: HTMLInputTypeAttribute;
+}>`
   input {
     width: 100%;
     padding: 14px 16px;
@@ -22,6 +26,14 @@ const StyledInput = styled.div<{ error: boolean }>`
     background-color: ${COLORS.white};
     ${typographyCss.body1}
     color: ${COLORS.gray900};
+
+    ${({ inputType }) =>
+      inputType === 'date' &&
+      `
+      border: none;
+      border-radius: 0;
+      border-bottom: 2px #D9D9D9 solid;
+    `};
 
     ::placeholder {
       ${typographyCss.body1}
@@ -49,6 +61,7 @@ interface TextFieldProps extends React.HTMLProps<HTMLInputElement> {
   validator?: Validator;
   label?: string;
   value: string;
+  type?: HTMLInputTypeAttribute;
 }
 
 const TextField = React.forwardRef<TextFieldRef, TextFieldProps>(
@@ -121,7 +134,7 @@ const TextField = React.forwardRef<TextFieldRef, TextFieldProps>(
             {label}
           </Body4>
         )}
-        <StyledInput error={!isValid}>
+        <StyledInput error={!isValid} inputType={textInputProps.type}>
           <input
             ref={inputRef}
             aria-label={label || textInputProps.name || textInputProps.id}
