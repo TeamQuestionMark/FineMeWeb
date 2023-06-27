@@ -1,5 +1,6 @@
 import Chip from '@/components/Chip/Chip';
 import ChipGroup from '@/components/Chip/ChipGroup';
+import OXButtonGroup from '@/components/OXButtonGroup';
 import { useState } from 'react';
 
 const CHIP_INPUTS = {
@@ -12,6 +13,11 @@ const CHIP_INPUTS = {
 
 const StageComponentsPage = () => {
   const [chipInputs, setChipInputs] = useState(CHIP_INPUTS);
+  const [OX, setOX] = useState<Boolean>();
+
+  const handleChangeOX = (value: boolean) => {
+    setOX(value);
+  };
 
   const handleClickChip = (value: string) => {
     setChipInputs(prev => ({
@@ -28,6 +34,7 @@ const StageComponentsPage = () => {
           </Chip>
         ))}
       </ChipGroup>
+      <OXButtonGroup onChange={handleChangeOX} />
     </div>
   );
 };
