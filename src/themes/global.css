@@ -20,3 +20,8 @@ body {
 input {
   outline: none;
 }
+
+button {
+  all: unset;
+  cursor: pointer;
+}

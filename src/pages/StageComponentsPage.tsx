@@ -1,6 +1,7 @@
 import Chip from '@/components/Chip/Chip';
 import ChipGroup from '@/components/Chip/ChipGroup';
 import OXButtonGroup from '@/components/OXButtonGroup';
+import Radio from '@/components/Radio';
 import TextField, { TextFieldRef } from '@/components/TextField';
 import Validator from '@/utils/Validator';
 import { useRef, useState } from 'react';
@@ -18,7 +19,7 @@ const validator = new Validator().required().max(5);
 const StageComponentsPage = () => {
   const [chipInputs, setChipInputs] = useState(CHIP_INPUTS);
   const inputRef = useRef<TextFieldRef>(null);
-  const [OX, setOX] = useState<Boolean>();
+  const [OX, setOX] = useState<boolean>();
   const [text, setText] = useState('');
 
   const handleChangeOX = (value: boolean) => {
@@ -36,8 +37,14 @@ const StageComponentsPage = () => {
   const handleChangeInput: React.FormEventHandler<HTMLInputElement> = e => {
     setText(e.currentTarget.value);
   };
+
   return (
     <div style={{ display: 'flex', flexDirection: 'column', rowGap: '30px' }}>
+      <div style={{ display: 'flex', columnGap: '10px' }}>
+        <Radio isClicked={OX || false} onClick={() => setOX(!OX)} />
+        <Radio disabled isClicked={OX || false} />
+      </div>
+
       <TextField
         ref={inputRef}
         label="이름"
