@@ -3,6 +3,7 @@ import App from './App';
 import { createRoot } from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import TypographyPage from './pages/TypographyPage';
+import { GlobalContainer } from './components/Layout/GlobalContainer';
 
 const router = createBrowserRouter([
   {
@@ -16,5 +17,7 @@ const router = createBrowserRouter([
 ]);
 
 createRoot(document.getElementById('root') as HTMLElement).render(
-  <RouterProvider router={router} />,
+  <GlobalContainer>
+    <RouterProvider router={router} />,
+  </GlobalContainer>,
 );
