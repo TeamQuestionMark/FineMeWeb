@@ -14,43 +14,6 @@ import styled from 'styled-components';
 import { Body4 } from './Typography';
 import { typographyCss } from './Typography/styles';
 
-const StyledInput = styled.div<{
-  error: boolean;
-  inputType?: HTMLInputTypeAttribute;
-}>`
-  input {
-    width: 100%;
-    padding: 14px 16px;
-    border-radius: 10px;
-    border: 2px solid ${COLORS.gray900};
-    background-color: ${COLORS.white};
-    ${typographyCss.body1}
-    color: ${COLORS.gray900};
-
-    ${({ inputType }) =>
-      inputType === 'date' &&
-      `
-      border: none;
-      border-radius: 0;
-      border-bottom: 2px #D9D9D9 solid;
-    `};
-
-    ::placeholder {
-      ${typographyCss.body1}
-      color: ${COLORS.textPlaceholder};
-    }
-
-    ${({ error }) => error && `border-color: ${COLORS.error100}`};
-    :disabled {
-      background-color: ${COLORS.gray200};
-    }
-    :focus,
-    :focus-within {
-      ${({ error }) => !error && `border-color: ${COLORS.active100}`};
-    }
-  }
-`;
-
 export type TextFieldRef = HTMLInputElement & {
   isValid: boolean;
   setIsValid: Dispatch<SetStateAction<boolean>>;
@@ -153,3 +116,40 @@ const TextField = React.forwardRef<TextFieldRef, TextFieldProps>(
 
 TextField.displayName = 'TextField';
 export default TextField;
+
+const StyledInput = styled.div<{
+  error: boolean;
+  inputType?: React.HTMLInputTypeAttribute;
+}>`
+  input {
+    width: -webkit-fill-available;
+    padding: 14px 16px;
+    border-radius: 10px;
+    border: 2px solid ${COLORS.gray900};
+    background-color: ${COLORS.white};
+    ${typographyCss.body1}
+    color: ${COLORS.gray900};
+
+    ${({ inputType }) =>
+      inputType === 'date' &&
+      `
+    border: none;
+    border-radius: 0;
+    border-bottom: 2px #D9D9D9 solid;
+  `};
+
+    ::placeholder {
+      ${typographyCss.body1}
+      color: ${COLORS.textPlaceholder};
+    }
+
+    ${({ error }) => error && `border-color: ${COLORS.error100}`};
+    :disabled {
+      background-color: ${COLORS.gray200};
+    }
+    :focus,
+    :focus-within {
+      ${({ error }) => !error && `border-color: ${COLORS.active100}`};
+    }
+  }
+`;

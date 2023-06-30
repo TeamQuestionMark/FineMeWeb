@@ -15,7 +15,7 @@ export default function IconOX({ checked, ox }: Props) {
           r="12"
           fill={fill}
           stroke={stroke}
-          stroke-width="2"
+          strokeWidth="2"
         />
       )) || (
         <g id="Group 129">
@@ -23,15 +23,15 @@ export default function IconOX({ checked, ox }: Props) {
             id="Vector 152"
             d="M1 1L22 22"
             stroke={stroke}
-            stroke-width="2"
-            stroke-linecap="round"
+            strokeWidth="2"
+            strokeLinecap="round"
           />
           <path
             id="Vector 153"
             d="M22 1L0.999999 22"
             stroke={stroke}
-            stroke-width="2"
-            stroke-linecap="round"
+            strokeWidth="2"
+            strokeLinecap="round"
           />
         </g>
       )}
