@@ -4,6 +4,7 @@ import { createRoot } from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import TypographyPage from './pages/TypographyPage';
 import { GlobalContainer } from './components/Layout/GlobalContainer';
+import StageComponentsPage from './pages/StageComponentsPage';
 
 const router = createBrowserRouter([
   {
@@ -13,6 +14,10 @@ const router = createBrowserRouter([
   {
     path: '/typography',
     element: <TypographyPage />,
+  },
+  {
+    path: '/stage-components',
+    element: <StageComponentsPage />,
   },
 ]);
 
