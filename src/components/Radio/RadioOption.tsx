@@ -3,6 +3,7 @@ import Radio, { RadioProps } from './Radio';
 import { COLORS } from '@/themes/colors';
 import { Body1 } from '../Typography';
 import renderMultiLineText from '@/utils/renderMultiLineText';
+import { inputTransitionCss } from '@/themes/transition';
 
 interface RadioOptionProps extends Pick<RadioProps, 'isClicked'> {
   label: string;
@@ -16,6 +17,7 @@ const StyledRadioOption = styled.li`
   border-radius: 10px;
   background-color: ${COLORS.gray50};
   cursor: pointer;
+  ${inputTransitionCss}
 `;
 
 const RadioOption: React.FC<RadioOptionProps> = ({
