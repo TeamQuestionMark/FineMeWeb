@@ -31,7 +31,7 @@ export function withTypographyBase(
   function Typography({
     className,
     children,
-    color = 'black',
+    color = 'gray900',
     style,
     element: elementProps,
     ...props
