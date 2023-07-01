@@ -2,7 +2,7 @@ import CheckBox from '@/components/CheckBox';
 import Chip from '@/components/Chip/Chip';
 import ChipGroup from '@/components/Chip/ChipGroup';
 import OXButtonGroup from '@/components/OXButtonGroup';
-import Radio from '@/components/Radio';
+import Radio from '@/components/Radio/Radio';
 import Switch from '@/components/Switch';
 import TextField, { TextFieldRef } from '@/components/TextField';
 import Validator from '@/utils/Validator';
