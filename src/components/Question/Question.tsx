@@ -34,7 +34,7 @@ const Question = ({ number, question, children }: QuestionProps) => {
         </StyledNumber>
         <Subhead1>{renderMultiLineText(question)}</Subhead1>
       </StyledQuestion>
-      <div style={{ marginLeft: '20px' }}>{children}</div>
+      <div>{children}</div>
     </div>
   );
 };
