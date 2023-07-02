@@ -1,4 +1,6 @@
+import CheckBoxOption from '@/components/CheckBox/CheckBoxOption';
 import StageContainer from '@/components/Layout/StageContainer';
+import CheckBoxTypeInput from '@/components/Question/CheckBoxTypeInput';
 import ChipTypeInput from '@/components/Question/ChipTypeInput';
 import Question from '@/components/Question/Question';
 import RadioTypeInput from '@/components/Question/RadioTypeInput';
@@ -41,9 +43,16 @@ const RADIO_OPTIONS: ChoiceOption[] = [
   },
 ];
 
-const initialInputs = {
+interface FormValues {
+  chip: number;
+  radio: number;
+  checkbox: number[];
+}
+
+const initialInputs: FormValues = {
   chip: -1,
   radio: -1,
+  checkbox: [],
 };
 
 const StagePage = () => {
@@ -51,6 +60,19 @@ const StagePage = () => {
 
   const handleInput: InputHandler = (name: string, value: string | number) => {
     setInput({ ...inputs, [name]: value });
+  };
+
+  const handleMultipleChoice: InputHandler = (name, value) => {
+    const list = [...(inputs[name as keyof FormValues] as number[])];
+    const choiceId = value as number;
+    const idx = list.indexOf(choiceId);
+
+    if (idx === -1) {
+      list.push(choiceId);
+    } else {
+      list.splice(idx, 1);
+    }
+    setInput({ ...inputs, [name]: list });
   };
 
   return (
@@ -75,6 +97,17 @@ const StagePage = () => {
             name="radio"
             onInput={handleInput}
             value={inputs.radio}
+          />
+        </Question>
+        <Question
+          number={3}
+          title={'내가 가장 좋아하는 간식(커피) 타임은 언제?'}
+        >
+          <CheckBoxTypeInput
+            options={RADIO_OPTIONS}
+            value={inputs.checkbox}
+            name={'checkbox'}
+            onInput={handleMultipleChoice}
           />
         </Question>
       </StageContainer>

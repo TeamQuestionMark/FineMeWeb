@@ -1,4 +1,4 @@
-import CheckBox from '@/components/CheckBox';
+import CheckBox from '@/components/CheckBox/CheckBox';
 import Chip from '@/components/Chip/Chip';
 import ChipGroup from '@/components/Chip/ChipGroup';
 import OXButtonGroup from '@/components/OXButtonGroup';
