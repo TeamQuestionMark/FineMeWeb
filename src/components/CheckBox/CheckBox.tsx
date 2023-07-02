@@ -5,7 +5,7 @@ import CheckBoxDeselectedEnabled from '@/assets/icons/CheckBox/icon-checkbox-des
 import CheckBoxSelectedDisabled from '@/assets/icons/CheckBox/icon-checkbox-selected-disabled@3x.png';
 import CheckBoxSelectedEnabled from '@/assets/icons/CheckBox/icon-checkbox-selected-enabled@3x.png';
 
-interface CheckBoxProps {
+export interface CheckBoxProps {
   style?: CSSProperties;
   disabled?: boolean;
   isClicked: boolean;
