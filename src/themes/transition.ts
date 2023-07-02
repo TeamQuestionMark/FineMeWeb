@@ -5,7 +5,7 @@ export const transitionCss = css`
 `;
 
 export const inputTransitionCss = css<{ scale?: number }>`
-  ${transitionCss}
+  transition: transform 0.2s ease-in;
   :hover {
     transform: scale(1.05);
   }

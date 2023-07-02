@@ -11,7 +11,6 @@ interface RadioTypeInputProps extends InputBaseProps {
 
 const StyledRadioTypeInput = styled.ol`
   display: flex;
-  padding: 0px 18px 0px 20px;
   flex-direction: column;
   row-gap: 14px;
 `;

@@ -13,7 +13,7 @@ interface ChipTypeInputProps extends InputBaseProps {
 }
 
 const StyledChipTypeInput = styled.div`
-  padding: 0 17px 0 30px;
+  padding: 0 9px;
 `;
 
 const ChipTypeInput = ({

@@ -10,7 +10,7 @@ const StageContainer = styled.ol`
   display: flex;
   flex-direction: column;
   row-gap: 40px;
-  padding: 44px 17px 31px;
+  padding: 44px 24px 31px 20px;
 `;
 
 export default StageContainer;

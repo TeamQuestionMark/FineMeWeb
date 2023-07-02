@@ -10,7 +10,6 @@ interface CheckBoxTypeInputProps extends MultiInputBaseProps {
 
 const StyledCheckBoxTypeInput = styled.ol`
   display: flex;
-  padding: 0px 18px 0px 20px;
   flex-direction: column;
   row-gap: 14px;
 `;

@@ -25,6 +25,10 @@ const StyledNumber = styled.div`
   background-color: ${COLORS.gray900};
 `;
 
+const StyledInputWrapper = styled.div`
+  padding: 0 10px 0 21px;
+`;
+
 const Question = ({ number, title, children }: QuestionProps) => {
   return (
     <div>
@@ -34,7 +38,7 @@ const Question = ({ number, title, children }: QuestionProps) => {
         </StyledNumber>
         <Subhead1>{renderMultiLineText(title)}</Subhead1>
       </StyledQuestion>
-      <div>{children}</div>
+      <StyledInputWrapper>{children}</StyledInputWrapper>
     </div>
   );
 };
