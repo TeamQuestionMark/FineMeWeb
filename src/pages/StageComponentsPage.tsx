@@ -85,7 +85,6 @@ const StageComponentsPage = () => {
           </Chip>
         ))}
       </ChipGroup>
-      <OXButtonGroup onChange={handleChangeOX} />
     </div>
   );
 };

@@ -1,12 +1,12 @@
 import { COLORS } from '@/themes/colors';
-import { useCallback, useState } from 'react';
+import { useCallback } from 'react';
 import IconOX from '@/assets/icons/OXButton/IconOX';
 import styled, { CSSProperties } from 'styled-components';
-import { transitionCss } from '@/themes/transition';
+import { inputTransitionCss } from '@/themes/transition';
+import { InputBaseProps } from '@/types';
 
-interface OXButtonGroupProps {
+interface OXButtonGroupProps extends InputBaseProps {
   style?: CSSProperties;
-  onChange: (value: boolean) => void;
 }
 
 const Wrapper = styled.div`
@@ -24,7 +24,7 @@ const StyledButton = styled.button<{ checked: boolean }>`
   justify-content: center;
   flex-grow: 1;
   cursor: pointer;
-  ${transitionCss}
+  ${inputTransitionCss}
 
   ${({ checked }) =>
     checked &&
@@ -34,29 +34,21 @@ const StyledButton = styled.button<{ checked: boolean }>`
   `};
 `;
 
-const OXButtonGroup = ({ onChange, style }: OXButtonGroupProps) => {
-  const [checkedValue, setCheckedValue] = useState<'o' | 'x'>();
-  const handlePress = useCallback(
+const OXButtonGroup = ({ name, value, onInput, style }: OXButtonGroupProps) => {
+  const handleInput = useCallback(
     (value: 'o' | 'x') => {
-      setCheckedValue(value);
-      onChange(value === 'o');
+      onInput(name, value);
     },
-    [onChange],
+    [name, onInput],
   );
 
   return (
     <Wrapper style={style}>
-      <StyledButton
-        checked={checkedValue === 'o'}
-        onClick={() => handlePress('o')}
-      >
-        <IconOX ox="o" checked={checkedValue === 'o'} />
+      <StyledButton checked={value === 'o'} onClick={() => handleInput('o')}>
+        <IconOX ox="o" checked={value === 'o'} />
       </StyledButton>
-      <StyledButton
-        checked={checkedValue === 'x'}
-        onClick={() => handlePress('x')}
-      >
-        <IconOX ox="x" checked={checkedValue === 'x'} />
+      <StyledButton checked={value === 'x'} onClick={() => handleInput('x')}>
+        <IconOX ox="x" checked={value === 'x'} />
       </StyledButton>
     </Wrapper>
   );

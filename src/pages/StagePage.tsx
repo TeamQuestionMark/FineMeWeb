@@ -1,5 +1,5 @@
-import CheckBoxOption from '@/components/CheckBox/CheckBoxOption';
 import StageContainer from '@/components/Layout/StageContainer';
+import OXButtonGroup from '@/components/OXButtonGroup';
 import CheckBoxTypeInput from '@/components/Question/CheckBoxTypeInput';
 import ChipTypeInput from '@/components/Question/ChipTypeInput';
 import Question from '@/components/Question/Question';
@@ -47,12 +47,14 @@ interface FormValues {
   chip: number;
   radio: number;
   checkbox: number[];
+  ox: 'o' | 'x' | '';
 }
 
 const initialInputs: FormValues = {
   chip: -1,
   radio: -1,
   checkbox: [],
+  ox: '',
 };
 
 const StagePage = () => {
@@ -109,6 +111,9 @@ const StagePage = () => {
             name={'checkbox'}
             onInput={handleMultipleChoice}
           />
+        </Question>
+        <Question number={4} title="나는 약속 장소에 먼저 도착하는 사람일까?">
+          <OXButtonGroup name="ox" value={inputs.ox} onInput={handleInput} />
         </Question>
       </StageContainer>
     </div>
