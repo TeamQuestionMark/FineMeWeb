@@ -6,7 +6,7 @@ import renderMultiLineText from '@/utils/renderMultiLineText';
 
 interface QuestionProps extends PropsWithChildren {
   number: number;
-  question: string;
+  title: string;
 }
 
 const StyledQuestion = styled.div`
@@ -25,14 +25,14 @@ const StyledNumber = styled.div`
   background-color: ${COLORS.gray900};
 `;
 
-const Question = ({ number, question, children }: QuestionProps) => {
+const Question = ({ number, title, children }: QuestionProps) => {
   return (
     <div>
       <StyledQuestion>
         <StyledNumber>
           <Body2 color="white">{number}</Body2>
         </StyledNumber>
-        <Subhead1>{renderMultiLineText(question)}</Subhead1>
+        <Subhead1>{renderMultiLineText(title)}</Subhead1>
       </StyledQuestion>
       <div>{children}</div>
     </div>

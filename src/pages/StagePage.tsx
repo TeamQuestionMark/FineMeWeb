@@ -20,10 +20,6 @@ const initialInputs = {
 const StagePage = () => {
   const [inputs, setInput] = useState(initialInputs);
 
-  const handleClickChip = (value: string) => {
-    setInput({ ...inputs, chip: value });
-  };
-
   const handleInput: InputHandler = (name: string, value: string) => {
     setInput({ ...inputs, [name]: value });
   };
@@ -31,7 +27,7 @@ const StagePage = () => {
   return (
     <div>
       <StageContainer>
-        <Question number={1} question={`나의 업무 필수템은?`}>
+        <Question number={1} title={`나의 업무 필수템은?`}>
           <ChipTypeInput
             options={CHIP_OPTIONS}
             onInput={handleInput}
@@ -41,7 +37,7 @@ const StagePage = () => {
         </Question>
         <Question
           number={2}
-          question={`지각이 예상되는 출근길..!
+          title={`지각이 예상되는 출근길..!
 아침 회의가 잡힐 분위기다!
 내가 할 것 같은 선택은?`}
         >
