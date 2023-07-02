@@ -3,10 +3,12 @@ import Chip from '../Chip/Chip';
 import ChipGroup from '../Chip/ChipGroup';
 import { useCallback } from 'react';
 import styled from 'styled-components';
+import { ChoiceOption } from '@/types/stage';
 
 interface ChipTypeInputProps extends InputBaseProps {
   name: string;
-  options: string[];
+  value: number;
+  options: ChoiceOption[];
   onInput: InputHandler;
 }
 
@@ -21,7 +23,7 @@ const ChipTypeInput = ({
   options,
 }: ChipTypeInputProps) => {
   const handleClickChip = useCallback(
-    (value: string) => {
+    (value: number) => {
       onInput(name, value);
     },
     [name, onInput],
@@ -32,11 +34,11 @@ const ChipTypeInput = ({
       <ChipGroup>
         {options.map((option, idx) => (
           <Chip
-            key={idx}
-            onClick={handleClickChip}
-            isChecked={value === option}
+            key={option.multipleChoiceId}
+            onClick={() => handleClickChip(option.multipleChoiceId)}
+            isChecked={value === option.multipleChoiceId}
           >
-            {option}
+            {option.content}
           </Chip>
         ))}
       </ChipGroup>

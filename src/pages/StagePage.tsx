@@ -3,24 +3,53 @@ import ChipTypeInput from '@/components/Question/ChipTypeInput';
 import Question from '@/components/Question/Question';
 import RadioTypeInput from '@/components/Question/RadioTypeInput';
 import { InputHandler } from '@/types';
+import { ChoiceOption } from '@/types/stage';
 import { useState } from 'react';
 
-const CHIP_OPTIONS = ['아메리카노', '이어폰', '포스트잇', '달력', '사원증'];
-const RADIO_OPTIONS = [
-  `지각할 것 같다고 솔직하게 메신저에 고백한다`,
-  `자연스러운 핑계 발견! 
+const CHIP_OPTIONS: ChoiceOption[] = [
+  {
+    multipleChoiceId: 0,
+    content: '아메리카노',
+  },
+  {
+    multipleChoiceId: 1,
+    content: '이어폰',
+  },
+  {
+    multipleChoiceId: 2,
+    content: '포스트잇',
+  },
+  {
+    multipleChoiceId: 3,
+    content: '달력',
+  },
+  {
+    multipleChoiceId: 4,
+    content: '사원증',
+  },
+];
+
+const RADIO_OPTIONS: ChoiceOption[] = [
+  {
+    multipleChoiceId: 0,
+    content: `지각할 것 같다고 솔직하게 메신저에 고백한다`,
+  },
+  {
+    multipleChoiceId: 1,
+    content: `자연스러운 핑계 발견! 
 커피 사서 들어가겠다며 주문을 받는다`,
+  },
 ];
 
 const initialInputs = {
-  chip: '',
-  radio: '',
+  chip: -1,
+  radio: -1,
 };
 
 const StagePage = () => {
   const [inputs, setInput] = useState(initialInputs);
 
-  const handleInput: InputHandler = (name: string, value: string) => {
+  const handleInput: InputHandler = (name: string, value: string | number) => {
     setInput({ ...inputs, [name]: value });
   };
 

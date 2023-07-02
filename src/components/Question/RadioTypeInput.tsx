@@ -2,9 +2,11 @@ import { InputBaseProps } from '@/types';
 import { useCallback } from 'react';
 import styled from 'styled-components';
 import RadioOption from '../Radio/RadioOption';
+import { ChoiceOption } from '@/types/stage';
 
 interface RadioTypeInputProps extends InputBaseProps {
-  options: string[];
+  options: ChoiceOption[];
+  value: number;
 }
 
 const StyledRadioTypeInput = styled.ol`
@@ -21,7 +23,7 @@ const RadioTypeInput = ({
   onInput,
 }: RadioTypeInputProps) => {
   const handleClickRadio = useCallback(
-    (value: string) => {
+    (value: number) => {
       onInput(name, value);
     },
     [name, onInput],
@@ -32,9 +34,9 @@ const RadioTypeInput = ({
       {options.map((option, idx) => (
         <RadioOption
           key={idx}
-          label={option}
-          isClicked={value === option}
-          onInput={handleClickRadio}
+          label={option.content}
+          isClicked={value === option.multipleChoiceId}
+          onInput={() => handleClickRadio(option.multipleChoiceId)}
         />
       ))}
     </StyledRadioTypeInput>
