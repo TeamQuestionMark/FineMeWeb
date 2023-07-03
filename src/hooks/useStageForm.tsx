@@ -22,9 +22,9 @@ export default function useStageForm(questions: Question[]) {
 
   /** 모든 inputs 값이 채워지면 true */
   const isCompleted = useMemo(() => {
-    for (const value in Object.values(inputs as Object)) {
-      if (!value) {
-        return false;
+    for (const value of Object.values(inputs)) {
+      if (typeof value === 'string' || Array.isArray(value)) {
+        if (value.length === 0) return false;
       }
     }
     return true;
