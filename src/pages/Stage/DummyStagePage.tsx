@@ -1,6 +1,9 @@
-import QuestionList from '@/pages/Stage/StageForm';
+import StageForm from '@/pages/Stage/StageForm';
 import useStageForm from '@/hooks/useStageForm';
 import { ChoiceOption, Question } from '@/types/stage';
+import ImgStageWork from '@/assets/images/Stage/stage-work@3x.png';
+import styled from 'styled-components';
+import Button from '@/components/Button';
 
 const CHIP_OPTIONS: ChoiceOption[] = [
   {
@@ -77,10 +80,32 @@ const dummyQuestions: Question[] = [
   },
 ];
 
+const Container = styled.div`
+  background-color: #faf8f0;
+  padding-bottom: 63px;
+`;
+const StageImage = styled.img<{}>`
+  width: 100%;
+`;
+
+const StageFormWrapper = styled.div`
+  transform: translateY(-44px);
+`;
+
 const DummyStagePage = () => {
   const methods = useStageForm(dummyQuestions);
-
-  return <QuestionList useStageForm={methods} questions={dummyQuestions} />;
+  const { isCompleted } = methods;
+  return (
+    <Container>
+      <StageImage src={ImgStageWork} />
+      <StageFormWrapper>
+        <StageForm useStageForm={methods} questions={dummyQuestions} />
+      </StageFormWrapper>
+      <Button style={{ margin: '0 20px' }} disabled={!isCompleted}>
+        저장 하기
+      </Button>
+    </Container>
+  );
 };
 
 export default DummyStagePage;
