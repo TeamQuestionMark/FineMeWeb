@@ -4,6 +4,7 @@ import { ChoiceOption, Question } from '@/types/stage';
 import ImgStageWork from '@/assets/images/Stage/stage-work@3x.png';
 import styled from 'styled-components';
 import Button from '@/components/Button';
+import { useLayoutEffect } from 'react';
 
 const CHIP_OPTIONS: ChoiceOption[] = [
   {
@@ -81,7 +82,6 @@ const dummyQuestions: Question[] = [
 ];
 
 const Container = styled.div`
-  background-color: #faf8f0;
   padding-bottom: 63px;
 `;
 const StageImage = styled.img<{}>`
@@ -95,6 +95,14 @@ const StageFormWrapper = styled.div`
 const DummyStagePage = () => {
   const methods = useStageForm(dummyQuestions);
   const { isCompleted } = methods;
+
+  useLayoutEffect(() => {
+    document.body.style.backgroundColor = '#faf8f0';
+
+    return () => {
+      document.body.style.backgroundColor = '';
+    };
+  });
   return (
     <Container>
       <StageImage src={ImgStageWork} />
