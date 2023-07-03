@@ -1,12 +1,13 @@
 import { COLORS } from '@/themes/colors';
 import { PropsWithChildren } from 'react';
 import styled from 'styled-components';
-import { Body2, Subhead1 } from '../Typography';
+import { Body2, Caption, Subhead1 } from '../Typography';
 import renderMultiLineText from '@/utils/renderMultiLineText';
 
 interface QuestionProps extends PropsWithChildren {
   number: number;
   title: string;
+  subTitle?: string;
 }
 
 const StyledQuestion = styled.div`
@@ -29,18 +30,21 @@ const StyledInputWrapper = styled.div`
   padding: 0 10px 0 21px;
 `;
 
-const Question = ({ number, title, children }: QuestionProps) => {
+const QuestionUI = ({ number, title, subTitle, children }: QuestionProps) => {
   return (
-    <div>
+    <li>
       <StyledQuestion>
         <StyledNumber>
           <Body2 color="white">{number}</Body2>
         </StyledNumber>
-        <Subhead1>{renderMultiLineText(title)}</Subhead1>
+        <div>
+          <Subhead1>{renderMultiLineText(title)}</Subhead1>
+          {subTitle && <Caption color="gray400">{subTitle}</Caption>}
+        </div>
       </StyledQuestion>
       <StyledInputWrapper>{children}</StyledInputWrapper>
-    </div>
+    </li>
   );
 };
 
-export default Question;
+export default QuestionUI;
