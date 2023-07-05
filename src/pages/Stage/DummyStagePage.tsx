@@ -64,7 +64,7 @@ const dummyQuestions: Question[] = [
   {
     questionId: 2,
     questionTitle: '출근하면 가장 먼저 하는 행동은?',
-    questionType: 'subjective',
+    questionType: 'SUBJECTIVE',
     multipleChoiceList: [],
   },
   {
@@ -76,7 +76,7 @@ const dummyQuestions: Question[] = [
   {
     questionId: 4,
     questionTitle: '나는 혼자서도 잘 논다?',
-    questionType: 'ox',
+    questionType: 'OX',
     multipleChoiceList: [],
   },
 ];

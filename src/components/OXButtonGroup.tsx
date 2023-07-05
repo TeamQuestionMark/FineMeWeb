@@ -36,7 +36,7 @@ const StyledButton = styled.button<{ checked: boolean }>`
 
 const OXButtonGroup = ({ name, value, onInput, style }: OXButtonGroupProps) => {
   const handleInput = useCallback(
-    (value: 'o' | 'x') => {
+    (value: 'O' | 'X') => {
       onInput(name, value);
     },
     [name, onInput],
@@ -44,11 +44,11 @@ const OXButtonGroup = ({ name, value, onInput, style }: OXButtonGroupProps) => {
 
   return (
     <Wrapper style={style}>
-      <StyledButton checked={value === 'o'} onClick={() => handleInput('o')}>
-        <IconOX ox="o" checked={value === 'o'} />
+      <StyledButton checked={value === 'O'} onClick={() => handleInput('O')}>
+        <IconOX ox="O" checked={value === 'O'} />
       </StyledButton>
-      <StyledButton checked={value === 'x'} onClick={() => handleInput('x')}>
-        <IconOX ox="x" checked={value === 'x'} />
+      <StyledButton checked={value === 'X'} onClick={() => handleInput('X')}>
+        <IconOX ox="X" checked={value === 'X'} />
       </StyledButton>
     </Wrapper>
   );

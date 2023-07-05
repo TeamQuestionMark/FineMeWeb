@@ -51,7 +51,7 @@ const StageForm = ({ questions, useStageForm }: StageFormProps) => {
               value={inputs[question.questionId] as number[]}
             />
           );
-        case 'ox':
+        case 'OX':
           return (
             <OXButtonGroup
               onInput={onInput}
@@ -68,7 +68,7 @@ const StageForm = ({ questions, useStageForm }: StageFormProps) => {
               value={inputs[question.questionId] as number}
             />
           );
-        case 'subjective':
+        case 'SUBJECTIVE':
           return (
             <TextField
               name={question.questionId.toString()}

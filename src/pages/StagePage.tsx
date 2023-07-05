@@ -47,7 +47,7 @@ interface FormValues {
   chip: number;
   radio: number;
   checkbox: number[];
-  ox: 'o' | 'x' | '';
+  ox: 'O' | 'X' | '';
 }
 
 const initialInputs: FormValues = {

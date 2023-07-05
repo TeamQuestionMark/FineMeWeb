@@ -1,5 +1,5 @@
 interface Props {
-  ox: 'o' | 'x';
+  ox: 'O' | 'X';
   checked: boolean;
 }
 export default function IconOX({ checked, ox }: Props) {
@@ -7,7 +7,7 @@ export default function IconOX({ checked, ox }: Props) {
   const stroke = checked ? '#864B0D' : '#A4A4A4';
   return (
     <svg width="26" height="26" viewBox="0 0 26 26" fill="none">
-      {(ox === 'o' && (
+      {(ox === 'O' && (
         <circle
           id="Ellipse 82"
           cx="13"
