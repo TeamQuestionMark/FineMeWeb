@@ -5,7 +5,6 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import TypographyPage from './pages/TypographyPage';
 import { GlobalContainer } from './components/Layout/GlobalContainer';
 import StageComponentsPage from './pages/StageComponentsPage';
-import StagePage from './pages/StagePage';
 import DummyStagePage from './pages/Stage/DummyStagePage';
 
 const router = createBrowserRouter([
