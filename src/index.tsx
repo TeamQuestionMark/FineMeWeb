@@ -33,6 +33,6 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById('root') as HTMLElement).render(
   <GlobalContainer>
-    <RouterProvider router={router} />,
+    <RouterProvider router={router} />
   </GlobalContainer>,
 );
