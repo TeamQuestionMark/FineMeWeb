@@ -2,7 +2,7 @@ import { COLORS } from '@/themes/colors';
 import { MouseEventHandler, PropsWithChildren, useCallback } from 'react';
 import styled from 'styled-components';
 import { Body1 } from '../Typography';
-import { transitionCss } from '@/themes/transition';
+import { inputTransitionCss, transitionCss } from '@/themes/transition';
 
 interface ChipProps extends PropsWithChildren {
   isChecked: boolean;
@@ -21,7 +21,7 @@ const StyledChip = styled.div<{ checked: boolean; disabled?: boolean }>`
   background-color: ${COLORS.white};
   width: fit-content;
   cursor: pointer;
-  ${transitionCss}
+  ${inputTransitionCss}
 
   ${({ checked }) =>
     checked &&

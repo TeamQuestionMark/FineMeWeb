@@ -4,9 +4,8 @@ import RadioDeselectedDisabled from '@/assets/icons/Radio/icon-radio-deselected-
 import RadioDeselectedEnabled from '@/assets/icons/Radio/icon-radio-deselected-enabled@3x.png';
 import RadioSelectedDisabled from '@/assets/icons/Radio/icon-radio-selected-disabled@3x.png';
 import RadioSelectedEnabled from '@/assets/icons/Radio/icon-radio-selected-enabled@3x.png';
-import { transitionCss } from '@/themes/transition';
 
-interface RadioProps {
+export interface RadioProps {
   style?: CSSProperties;
   disabled?: boolean;
   isClicked: boolean;
@@ -18,7 +17,6 @@ const StyledRadio = styled.button<{ imageSrc: string }>`
   height: 20px;
   background-image: ${({ imageSrc }) => `url(${imageSrc})`};
   background-size: contain;
-  ${transitionCss}
 
   :disabled {
     cursor: not-allowed;
