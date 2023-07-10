@@ -2,8 +2,9 @@ import { COLORS } from '@/themes/colors';
 import styled from 'styled-components';
 import IconAnswer from '@/assets/icons/AnswerBox/icon-answer@3x.png';
 import { Body1, Body2 } from '../Typography';
+import QuestionBox from './QuestionBox';
 
-const StyledSubjectiveAnswerBox = styled.ol`
+const StyledSubjectiveResult = styled.ol`
   display: flex;
   flex-direction: column;
   row-gap: 25px;
@@ -42,14 +43,21 @@ const Answer: React.FC<AnswerProps> = ({ answer, nickname }) => {
   );
 };
 
-interface SubjectiveAnswerBoxProps {}
-const SubjectiveAnswerBox: React.FC<SubjectiveAnswerBoxProps> = ({}) => {
+interface SubjectiveResultProps {
+  questionTitle: string;
+}
+const SubjectiveResult: React.FC<SubjectiveResultProps> = ({
+  questionTitle,
+}) => {
   return (
-    <StyledSubjectiveAnswerBox>
-      <Answer answer="탕수육은 부먹으로 먹던데" nickname="김재현" />
-      <Answer answer="탕수육은 부먹으로 먹던데" nickname="김재현" />
-    </StyledSubjectiveAnswerBox>
+    <div>
+      <QuestionBox questionTitle={questionTitle} />
+      <StyledSubjectiveResult>
+        <Answer answer="탕수육은 부먹으로 먹던데" nickname="김재현" />
+        <Answer answer="탕수육은 부먹으로 먹던데" nickname="김재현" />
+      </StyledSubjectiveResult>
+    </div>
   );
 };
 
-export default SubjectiveAnswerBox;
+export default SubjectiveResult;

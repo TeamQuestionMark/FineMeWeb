@@ -15,6 +15,7 @@ const StyledQuestionBox = styled.div`
   border-radius: 15px;
   border: 2px solid ${COLORS.brandColor400};
   background: ${COLORS.brandColor50};
+  margin-bottom: 16px;
 `;
 
 const IconQ = styled.div`

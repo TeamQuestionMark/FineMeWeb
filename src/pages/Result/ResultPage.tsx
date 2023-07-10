@@ -1,26 +1,24 @@
 import PageLayout from '@/components/Layout/PageLayout';
-import MultipleAnswerBox from '@/components/StageResult/MultipleAnswerBox';
-import QuestionBox from '@/components/StageResult/QuestionBox';
-import SubjectiveAnswerBox from '@/components/StageResult/SubjectiveAnswerBox';
+import MultipleChoiceResult from '@/components/StageResult/MultipleChoiceResult';
+import SubjectiveResult from '@/components/StageResult/SubjectiveResult';
+import { Headline2 } from '@/components/Typography';
+import renderMultiLineText from '@/utils/renderMultiLineText';
 import styled from 'styled-components';
 
-const StyledResultWrapper = styled.div`
-  > :first-child {
-    margin-bottom: 16px;
-  }
-`;
+const StyledResultWrapper = styled.div``;
 const ResultPage = () => {
   return (
     <PageLayout>
+      <Headline2 style={{ marginBottom: '16px' }}>
+        {renderMultiLineText(`회사에서
+일하는 나의 모습은?`)}
+      </Headline2>
       <StyledResultWrapper>
-        <QuestionBox questionTitle="나는 탕수육을 어떻게 먹을까?" />
-        <SubjectiveAnswerBox />
-
-        <QuestionBox
+        <SubjectiveResult questionTitle="나는 탕수육을 어떻게 먹을까?" />
+        <MultipleChoiceResult
           questionTitle={`지각이 예상되는 출근길..!
 아침 회의가 잡힐 분위기다!`}
         />
-        <MultipleAnswerBox />
       </StyledResultWrapper>
     </PageLayout>
   );
