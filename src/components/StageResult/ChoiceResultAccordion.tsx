@@ -80,12 +80,17 @@ const ChoiceResultAccordion: React.FC<ChoiceResultAccordionProps> = ({
           <IconA />
           <Body2>{renderMultiLineText(content)}</Body2>
         </StyledHeaderLeft>
-        <StyledHeaderRight>
-          <StyledNumberLabel>
-            <Caption color="brandColor800">{nicknames.length}건</Caption>
-          </StyledNumberLabel>
-          <AccordionButton open={open} onClick={() => setOpen(prev => !prev)} />
-        </StyledHeaderRight>
+        {nicknames.length > 0 && (
+          <StyledHeaderRight>
+            <StyledNumberLabel>
+              <Caption color="brandColor800">{nicknames.length}건</Caption>
+            </StyledNumberLabel>
+            <AccordionButton
+              open={open}
+              onClick={() => setOpen(prev => !prev)}
+            />
+          </StyledHeaderRight>
+        )}
       </StyledHeader>
       {open && (
         <StyledBody>

@@ -5,7 +5,11 @@ import { Headline2 } from '@/components/Typography';
 import renderMultiLineText from '@/utils/renderMultiLineText';
 import styled from 'styled-components';
 
-const StyledResultWrapper = styled.div``;
+const StyledResultWrapper = styled.div`
+  > div {
+    margin-bottom: 40px;
+  }
+`;
 const ResultPage = () => {
   return (
     <PageLayout>

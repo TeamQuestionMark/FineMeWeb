@@ -20,7 +20,7 @@ const MultipleChoiceResult: React.FC<MultipleChoiceResultProps> = ({
         <ChoiceResultAccordion
           content={`지각할 것 같다고 솔직하게
 메신저에 고백한다`}
-          nicknames={['김재현']}
+          nicknames={[]}
         />
         <ChoiceResultAccordion
           content={`자연스러운 핑계 발견! 커피 사서
