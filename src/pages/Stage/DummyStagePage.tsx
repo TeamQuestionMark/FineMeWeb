@@ -70,7 +70,7 @@ const dummyQuestions: Question[] = [
   {
     questionId: 3,
     questionTitle: '내가 가장 좋아하는 간식(커피) 타임은 언제?',
-    questionType: 'checkbox',
+    questionType: 'MULTIPLE',
     multipleChoiceList: CHOICE_OPTIONS,
   },
   {

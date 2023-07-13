@@ -42,7 +42,7 @@ const StageForm = ({ questions, useStageForm }: StageFormProps) => {
               value={inputs[question.questionId] as number}
             />
           );
-        case 'checkbox':
+        case 'MULTIPLE':
           return (
             <CheckBoxTypeInput
               options={question.multipleChoiceList}
@@ -92,7 +92,7 @@ const StageForm = ({ questions, useStageForm }: StageFormProps) => {
           number={idx + 1}
           title={q.questionTitle}
           subTitle={
-            q.questionType === 'checkbox' ? '(중복 체크 가능)' : undefined
+            q.questionType === 'MULTIPLE' ? '(중복 체크 가능)' : undefined
           }
         >
           {renderAnswerInput(q)}

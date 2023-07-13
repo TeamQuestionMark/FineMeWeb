@@ -5,7 +5,7 @@ export type Question = {
   multipleChoiceList: ChoiceOption[];
 };
 
-export type QuestionType = 'OX' | 'checkbox' | 'SUBJECTIVE' | 'radio' | 'chip';
+export type QuestionType = 'OX' | 'MULTIPLE' | 'SUBJECTIVE' | 'radio' | 'chip';
 export type ChoiceOption = {
   multipleChoiceId: number;
   content: string;
