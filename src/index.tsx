@@ -30,6 +30,7 @@ const router = createBrowserRouter([
     path: '/stage/preview',
     element: <StagePreviewPage />,
   },
+  {
     path: '/result',
     element: <ResultPage />,
   },
