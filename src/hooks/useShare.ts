@@ -4,9 +4,7 @@ export default function useShare() {
    * @return navigator.share의 promise를 반환합니다. 사용자의 공유 액션이 끝나면 resolve 됩니다.
    * navigator.share을 지원하지 않는 기기(ex. 데스크탑)면 에러를 던집니다.
    */
-  const share = (
-    shareData: Exclude<Parameters<typeof navigator.share>[0], undefined>,
-  ) => {
+  const share = (shareData: ShareData) => {
     try {
       if (navigator.share) {
         const { title, url, text, files } = shareData;

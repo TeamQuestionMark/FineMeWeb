@@ -43,11 +43,11 @@ const StagePreviewPage = () => {
   });
 
   const handleClickShare = useCallback(async () => {
-    const url = 'TODO: url';
+    const url = 'https://TODO.com';
     try {
       await share({
         title: '스테이지 공유하기',
-        url: '',
+        url: url,
         text: '회사에서 일하는 내 모습은?',
       });
     } catch {
