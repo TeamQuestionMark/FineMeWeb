@@ -3,17 +3,10 @@ import useStageForm from '@/hooks/useStageForm';
 import ImgStageWork from '@/assets/images/Stage/stage-work@3x.png';
 import styled from 'styled-components';
 import Button from '@/components/Button';
-import {
-  useCallback,
-  useEffect,
-  useLayoutEffect,
-  useMemo,
-  useState,
-} from 'react';
+import { useCallback, useEffect, useLayoutEffect, useState } from 'react';
 import { dummyPagninatedQuetions } from './dummy';
-import { Pagination } from '@/api/instance';
 import { Question } from '@/types/stage';
-import usePagination from '@/hooks/usePagination';
+import useShare from '@/hooks/useShare';
 
 const Container = styled.div`
   padding-bottom: 63px;
@@ -26,35 +19,20 @@ const StageFormWrapper = styled.div`
   transform: translateY(-44px);
 `;
 
-const PAGE_SIZE = 5;
-const DummyStagePage = () => {
+const StagePreviewPage = () => {
   const methods = useStageForm();
-  const { validate, initForm, isFormReady } = methods;
-
-  const [data, setData] = useState<Pagination<Question[]>>();
+  const { initForm, isFormReady } = methods;
   const [questions, setQuestions] = useState<Question[]>();
-  const { page, setTotalPage, hasNext, next } = usePagination();
-
-  const currentQuestionIndices: number[] = useMemo(() => {
-    return Array(PAGE_SIZE)
-      .fill(PAGE_SIZE * (page - 1))
-      .map((key, idx) => key + idx);
-  }, [page]);
+  const { share, copy } = useShare();
 
   useEffect(() => {
     setTimeout(() => {
       const data = dummyPagninatedQuetions(1, 15);
       console.log('fetch');
       initForm(data?.contents);
-      setData(data);
+      setQuestions(data.contents);
     }, 500);
   }, [initForm]);
-
-  useEffect(() => {
-    if (!data) return;
-    setTotalPage(Math.ceil(data.totalCount / PAGE_SIZE));
-    setQuestions(data.contents.slice(PAGE_SIZE * (page - 1), PAGE_SIZE * page));
-  }, [data, page, setTotalPage]);
 
   useLayoutEffect(() => {
     document.body.style.backgroundColor = '#faf8f0';
@@ -64,14 +42,19 @@ const DummyStagePage = () => {
     };
   });
 
-  const handleClickNext = useCallback(() => {
-    if (hasNext) {
-      next();
-      window.scrollTo(0, 0);
-    } else {
-      // 제출
+  const handleClickShare = useCallback(async () => {
+    const url = 'https://TODO.com';
+    try {
+      await share({
+        title: '스테이지 공유하기',
+        url: url,
+        text: '회사에서 일하는 내 모습은?',
+      });
+    } catch {
+      const succeed = await copy(url);
+      succeed && window.alert('클립보드에 복사하였습니다');
     }
-  }, [hasNext, next]);
+  }, [copy, share]);
 
   return (
     <Container>
@@ -79,21 +62,17 @@ const DummyStagePage = () => {
       <StageFormWrapper>
         {isFormReady && questions && (
           <StageForm
-            startNumber={currentQuestionIndices[0] + 1}
+            startNumber={1}
             useStageForm={methods}
             questions={questions}
           />
         )}
       </StageFormWrapper>
-      <Button
-        style={{ margin: '0 20px' }}
-        disabled={!validate(currentQuestionIndices)}
-        onClick={handleClickNext}
-      >
-        {hasNext ? '다음으로' : '응답 완료'}
+      <Button style={{ margin: '0 20px' }} onClick={handleClickShare}>
+        공유하기
       </Button>
     </Container>
   );
 };
 
-export default DummyStagePage;
+export default StagePreviewPage;

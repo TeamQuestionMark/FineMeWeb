@@ -6,6 +6,7 @@ import TypographyPage from './pages/TypographyPage';
 import { GlobalContainer } from './components/Layout/GlobalContainer';
 import StageComponentsPage from './pages/StageComponentsPage';
 import DummyStagePage from './pages/Stage/DummyStagePage';
+import StagePreviewPage from './pages/Stage/StagePreviewPage';
 import ResultPage from './pages/Result/ResultPage';
 
 const router = createBrowserRouter([
@@ -26,6 +27,9 @@ const router = createBrowserRouter([
     element: <DummyStagePage />,
   },
   {
+    path: '/stage/preview',
+    element: <StagePreviewPage />,
+  },
     path: '/result',
     element: <ResultPage />,
   },

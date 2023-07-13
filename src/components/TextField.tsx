@@ -23,7 +23,6 @@ export type TextFieldRef = HTMLInputElement & {
 interface TextFieldProps extends React.HTMLProps<HTMLInputElement> {
   validator?: Validator;
   label?: string;
-  value: string;
   type?: HTMLInputTypeAttribute;
 }
 
@@ -43,7 +42,7 @@ const TextField = React.forwardRef<TextFieldRef, TextFieldProps>(
     /** validator prop이 있을 경우 onChangeText, onBlur, onFocus 시 유효성 검증 및 status 업데이트 */
     const validate = useCallback(
       async (text?: string) => {
-        const target = text !== undefined ? text : textInputProps.value;
+        const target = text !== undefined ? text : inputRef.current?.value;
         if (validator && target !== undefined) {
           const isValid = await validator.validate(target);
           console.log('🔸 → isValid:', isValid);
@@ -53,7 +52,7 @@ const TextField = React.forwardRef<TextFieldRef, TextFieldProps>(
         setIsValid(true);
         return true;
       },
-      [textInputProps.value, validator],
+      [validator],
     );
 
     const handleChange = useCallback<ChangeEventHandler<HTMLInputElement>>(
