@@ -2,11 +2,18 @@ import { InputHandler } from '@/types';
 import { Question } from '@/types/stage';
 import { useCallback, useMemo, useState } from 'react';
 
-export default function useStageForm(questions: Question[]) {
-  const [inputs, setInput] = useState(initFormValues(questions));
+export default function useStageForm() {
+  const [inputs, setInput] = useState<ReturnType<typeof initFormValues>>({});
+  const [isFormReady, setIsFormReady] = useState(false);
+
+  const initForm = useCallback((questions: Question[]) => {
+    setInput(initFormValues(questions));
+    setIsFormReady(true);
+  }, []);
 
   const onInput: InputHandler = useCallback(
     (name: keyof typeof inputs, value: string | number) => {
+      if (!isFormReady) return;
       if (
         typeof inputs[name] === 'string' ||
         typeof inputs[name] === 'number'
@@ -17,20 +24,43 @@ export default function useStageForm(questions: Question[]) {
         setInput({ ...inputs, [name]: newChoice });
       }
     },
-    [inputs],
+    [inputs, isFormReady],
   );
 
   /** 모든 inputs 값이 채워지면 true */
   const isCompleted = useMemo(() => {
+    if (!isFormReady) return;
     for (const value of Object.values(inputs)) {
-      if (typeof value === 'string' || Array.isArray(value)) {
+      if (value === undefined) return false;
+      if (typeof value !== 'number') {
         if (value.length === 0) return false;
       }
     }
     return true;
-  }, [inputs]);
+  }, [inputs, isFormReady]);
 
-  return { inputs, isCompleted, onInput };
+  const validate = useCallback(
+    (inputIndices: number[]) => {
+      if (!isFormReady) return false;
+      for (
+        let idx = inputIndices[0];
+        idx < inputIndices[inputIndices.length - 1];
+        idx++
+      ) {
+        const value = inputs[idx];
+        if (value === undefined) return false;
+        if (typeof value !== 'number') {
+          if (value.length === 0) {
+            return false;
+          }
+        }
+      }
+      return true;
+    },
+    [inputs, isFormReady],
+  );
+
+  return { inputs, isCompleted, onInput, initForm, isFormReady, validate };
 }
 
 function makeNewMultipleChoice<T>(inputs: T, name: keyof T, value: number) {

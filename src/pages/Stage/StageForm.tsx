@@ -14,6 +14,7 @@ import Validator from '@/utils/Validator';
 interface StageFormProps extends PropsWithChildren {
   questions: Question[];
   useStageForm: ReturnType<typeof useStageForm>;
+  startNumber: number;
 }
 
 const Container = styled.ol`
@@ -28,7 +29,11 @@ const Container = styled.ol`
   padding: 44px 24px 31px 20px;
 `;
 
-const StageForm = ({ questions, useStageForm }: StageFormProps) => {
+const StageForm = ({
+  questions,
+  useStageForm,
+  startNumber,
+}: StageFormProps) => {
   const { inputs, onInput } = useStageForm;
   const renderAnswerInput = useCallback(
     (question: Question) => {
@@ -43,14 +48,16 @@ const StageForm = ({ questions, useStageForm }: StageFormProps) => {
             />
           );
         case 'MULTIPLE':
-          return (
-            <CheckBoxTypeInput
-              options={question.multipleChoiceList}
-              onInput={onInput}
-              name={question.questionId.toString()}
-              value={inputs[question.questionId] as number[]}
-            />
-          );
+          if (Array.isArray(inputs[question.questionId]))
+            return (
+              <CheckBoxTypeInput
+                options={question.multipleChoiceList}
+                onInput={onInput}
+                name={question.questionId.toString()}
+                value={inputs[question.questionId] as number[]}
+              />
+            );
+          break;
         case 'OX':
           return (
             <OXButtonGroup
@@ -72,7 +79,6 @@ const StageForm = ({ questions, useStageForm }: StageFormProps) => {
           return (
             <TextField
               name={question.questionId.toString()}
-              value={inputs[question.questionId] as string}
               onInput={e =>
                 onInput(e.currentTarget.name, e.currentTarget.value)
               }
@@ -89,7 +95,7 @@ const StageForm = ({ questions, useStageForm }: StageFormProps) => {
       {questions.map((q, idx) => (
         <QuestionUI
           key={q.questionId}
-          number={idx + 1}
+          number={startNumber + idx}
           title={q.questionTitle}
           subTitle={
             q.questionType === 'MULTIPLE' ? '(중복 체크 가능)' : undefined
