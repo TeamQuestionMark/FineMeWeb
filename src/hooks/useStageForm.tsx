@@ -44,7 +44,7 @@ export default function useStageForm() {
       if (!isFormReady) return false;
       for (
         let idx = inputIndices[0];
-        idx < inputIndices[inputIndices.length - 1];
+        idx <= inputIndices[inputIndices.length - 1];
         idx++
       ) {
         const value = inputs[idx];
