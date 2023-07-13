@@ -7,6 +7,7 @@ import { GlobalContainer } from './components/Layout/GlobalContainer';
 import StageComponentsPage from './pages/StageComponentsPage';
 import DummyStagePage from './pages/Stage/DummyStagePage';
 import StagePreviewPage from './pages/Stage/StagePreviewPage';
+import ResultPage from './pages/Result/ResultPage';
 
 const router = createBrowserRouter([
   {
@@ -29,10 +30,13 @@ const router = createBrowserRouter([
     path: '/stage/preview',
     element: <StagePreviewPage />,
   },
+    path: '/result',
+    element: <ResultPage />,
+  },
 ]);
 
 createRoot(document.getElementById('root') as HTMLElement).render(
   <GlobalContainer>
-    <RouterProvider router={router} />,
+    <RouterProvider router={router} />
   </GlobalContainer>,
 );
