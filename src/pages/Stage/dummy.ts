@@ -45,7 +45,7 @@ export const dummyQuestions: Question[] = [
   {
     questionId: 0,
     questionTitle: '나의 업무 필수템은?',
-    questionType: 'chip',
+    questionType: 'CHIP',
     multipleChoiceList: CHIP_OPTIONS,
   },
   {
@@ -53,7 +53,7 @@ export const dummyQuestions: Question[] = [
     questionTitle: `지각이 예상되는 출근길..!
     아침 회의가 잡힐 분위기다!
     내가 할 것 같은 선택은?`,
-    questionType: 'radio',
+    questionType: 'RADIO',
     multipleChoiceList: CHOICE_OPTIONS,
   },
   {
@@ -65,7 +65,7 @@ export const dummyQuestions: Question[] = [
   {
     questionId: 3,
     questionTitle: '내가 가장 좋아하는 간식(커피) 타임은 언제?',
-    questionType: 'MULTIPLE',
+    questionType: 'CHECK_BOX',
     multipleChoiceList: CHOICE_OPTIONS,
   },
   {
@@ -77,7 +77,7 @@ export const dummyQuestions: Question[] = [
   {
     questionId: 5,
     questionTitle: '나의 업무 필수템은?',
-    questionType: 'chip',
+    questionType: 'CHIP',
     multipleChoiceList: CHIP_OPTIONS,
   },
   {
@@ -85,7 +85,7 @@ export const dummyQuestions: Question[] = [
     questionTitle: `지각이 예상되는 출근길..!
     아침 회의가 잡힐 분위기다!
     내가 할 것 같은 선택은?`,
-    questionType: 'radio',
+    questionType: 'RADIO',
     multipleChoiceList: CHOICE_OPTIONS,
   },
   {
@@ -97,7 +97,7 @@ export const dummyQuestions: Question[] = [
   {
     questionId: 8,
     questionTitle: '내가 가장 좋아하는 간식(커피) 타임은 언제?',
-    questionType: 'MULTIPLE',
+    questionType: 'CHECK_BOX',
     multipleChoiceList: CHOICE_OPTIONS,
   },
   {
@@ -109,7 +109,7 @@ export const dummyQuestions: Question[] = [
   {
     questionId: 10,
     questionTitle: '나의 업무 필수템은?',
-    questionType: 'chip',
+    questionType: 'CHIP',
     multipleChoiceList: CHIP_OPTIONS,
   },
   {
@@ -117,7 +117,7 @@ export const dummyQuestions: Question[] = [
     questionTitle: `지각이 예상되는 출근길..!
     아침 회의가 잡힐 분위기다!
     내가 할 것 같은 선택은?`,
-    questionType: 'radio',
+    questionType: 'RADIO',
     multipleChoiceList: CHOICE_OPTIONS,
   },
   {
@@ -129,7 +129,7 @@ export const dummyQuestions: Question[] = [
   {
     questionId: 13,
     questionTitle: '내가 가장 좋아하는 간식(커피) 타임은 언제?',
-    questionType: 'MULTIPLE',
+    questionType: 'CHECK_BOX',
     multipleChoiceList: CHOICE_OPTIONS,
   },
   {

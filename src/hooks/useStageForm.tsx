@@ -81,7 +81,7 @@ function initFormValues(questions: Question[]) {
 
   questions.forEach(q => {
     switch (q.questionType) {
-      case 'MULTIPLE':
+      case 'CHECK_BOX':
         initialValues[q.questionId] = [];
         break;
       default:
