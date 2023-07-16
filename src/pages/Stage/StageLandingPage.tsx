@@ -2,8 +2,11 @@ import Button from '@/components/Button';
 import PageLayout from '@/components/Layout/PageLayout';
 import TextField, { TextFieldRef } from '@/components/TextField';
 import { Headline2 } from '@/components/Typography';
+import { SESSION_STORAGE_KEY } from '@/constants/storage';
 import Validator from '@/utils/Validator';
+import { stringToNumber } from '@/utils/stringToNumber';
 import { useRef, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 
 const Container = styled.div`
@@ -17,14 +20,23 @@ const Container = styled.div`
 
 const validator = new Validator().min(2).max(8);
 const StageLandingPage = () => {
+  const navigate = useNavigate()
   const [nickname, setNickname] = useState('');
   const [isValid, setIsValid] = useState(false);
   const inputRef = useRef<TextFieldRef>(null)
+  const params = useParams()
+  const stageId = stringToNumber(params.stageId);
+
   const handleInput: React.FormEventHandler<HTMLInputElement> = async e => {
     setNickname(e.currentTarget.value);
     const isValid = await inputRef.current?.validate(e.currentTarget.value) || false
     setIsValid(isValid)
   };
+
+  const handleSubmit = () => {
+    sessionStorage.setItem(SESSION_STORAGE_KEY.nickname(stageId), nickname);
+    navigate('/questions', {'relative': 'path'})
+  }
 
   return (
     <Container as={PageLayout}>
@@ -44,7 +56,7 @@ const StageLandingPage = () => {
           onInput={handleInput}
         />
       </div>
-      <Button disabled={!isValid} style={{ boxShadow: '5px 5px 0px 0px #000' }}>
+      <Button disabled={!isValid} style={{ boxShadow: '5px 5px 0px 0px #000' }} onClick={handleSubmit}>
         그럼, 지금 시작하시겠어요?
       </Button>
     </Container>
