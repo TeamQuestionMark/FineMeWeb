@@ -20,23 +20,24 @@ const Container = styled.div`
 
 const validator = new Validator().min(2).max(8);
 const StageLandingPage = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [nickname, setNickname] = useState('');
   const [isValid, setIsValid] = useState(false);
-  const inputRef = useRef<TextFieldRef>(null)
-  const params = useParams()
+  const inputRef = useRef<TextFieldRef>(null);
+  const params = useParams();
   const stageId = stringToNumber(params.stageId);
 
   const handleInput: React.FormEventHandler<HTMLInputElement> = async e => {
     setNickname(e.currentTarget.value);
-    const isValid = await inputRef.current?.validate(e.currentTarget.value) || false
-    setIsValid(isValid)
+    const isValid =
+      (await inputRef.current?.validate(e.currentTarget.value)) || false;
+    setIsValid(isValid);
   };
 
   const handleSubmit = () => {
     sessionStorage.setItem(SESSION_STORAGE_KEY.nickname(stageId), nickname);
-    navigate('/questions', {'relative': 'path'})
-  }
+    navigate('./questions');
+  };
 
   return (
     <Container as={PageLayout}>
@@ -56,7 +57,11 @@ const StageLandingPage = () => {
           onInput={handleInput}
         />
       </div>
-      <Button disabled={!isValid} style={{ boxShadow: '5px 5px 0px 0px #000' }} onClick={handleSubmit}>
+      <Button
+        disabled={!isValid}
+        style={{ boxShadow: '5px 5px 0px 0px #000' }}
+        onClick={handleSubmit}
+      >
         그럼, 지금 시작하시겠어요?
       </Button>
     </Container>
