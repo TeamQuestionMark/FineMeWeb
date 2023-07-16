@@ -41,9 +41,9 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["prettier", "npm:2.8.8"],\
             ["react", "npm:18.2.0"],\
             ["react-dom", "virtual:624dbf18cabda61da9740a87c183e0a43e7df2b6d3a7c6aec00b086c45c6fe2f7d5573685dfb19534ba6d8085e8cfbec55bfdd162bbf9cff9e8a2ed22ddf259a#npm:18.2.0"],\
+            ["react-is", "npm:18.2.0"],\
             ["react-router-dom", "virtual:624dbf18cabda61da9740a87c183e0a43e7df2b6d3a7c6aec00b086c45c6fe2f7d5573685dfb19534ba6d8085e8cfbec55bfdd162bbf9cff9e8a2ed22ddf259a#npm:6.14.1"],\
             ["react-scripts", "virtual:624dbf18cabda61da9740a87c183e0a43e7df2b6d3a7c6aec00b086c45c6fe2f7d5573685dfb19534ba6d8085e8cfbec55bfdd162bbf9cff9e8a2ed22ddf259a#npm:5.0.1"],\
-            ["reset-css", "npm:5.0.1"],\
             ["styled-components", "virtual:624dbf18cabda61da9740a87c183e0a43e7df2b6d3a7c6aec00b086c45c6fe2f7d5573685dfb19534ba6d8085e8cfbec55bfdd162bbf9cff9e8a2ed22ddf259a#npm:5.3.11"],\
             ["typescript", "patch:typescript@npm%3A4.9.5#~builtin<compat/typescript>::version=4.9.5&hash=289587"],\
             ["web-vitals", "npm:2.1.4"]\
@@ -9406,9 +9406,9 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["prettier", "npm:2.8.8"],\
             ["react", "npm:18.2.0"],\
             ["react-dom", "virtual:624dbf18cabda61da9740a87c183e0a43e7df2b6d3a7c6aec00b086c45c6fe2f7d5573685dfb19534ba6d8085e8cfbec55bfdd162bbf9cff9e8a2ed22ddf259a#npm:18.2.0"],\
+            ["react-is", "npm:18.2.0"],\
             ["react-router-dom", "virtual:624dbf18cabda61da9740a87c183e0a43e7df2b6d3a7c6aec00b086c45c6fe2f7d5573685dfb19534ba6d8085e8cfbec55bfdd162bbf9cff9e8a2ed22ddf259a#npm:6.14.1"],\
             ["react-scripts", "virtual:624dbf18cabda61da9740a87c183e0a43e7df2b6d3a7c6aec00b086c45c6fe2f7d5573685dfb19534ba6d8085e8cfbec55bfdd162bbf9cff9e8a2ed22ddf259a#npm:5.0.1"],\
-            ["reset-css", "npm:5.0.1"],\
             ["styled-components", "virtual:624dbf18cabda61da9740a87c183e0a43e7df2b6d3a7c6aec00b086c45c6fe2f7d5573685dfb19534ba6d8085e8cfbec55bfdd162bbf9cff9e8a2ed22ddf259a#npm:5.3.11"],\
             ["typescript", "patch:typescript@npm%3A4.9.5#~builtin<compat/typescript>::version=4.9.5&hash=289587"],\
             ["web-vitals", "npm:2.1.4"]\
@@ -15467,15 +15467,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
-      ["reset-css", [\
-        ["npm:5.0.1", {\
-          "packageLocation": "./.yarn/cache/reset-css-npm-5.0.1-3b45ae8990-b93380a2c6.zip/node_modules/reset-css/",\
-          "packageDependencies": [\
-            ["reset-css", "npm:5.0.1"]\
-          ],\
-          "linkType": "HARD"\
-        }]\
-      ]],\
       ["resolve", [\
         ["patch:resolve@npm%3A1.22.3#~builtin<compat/resolve>::version=1.22.3&hash=c3c19d", {\
           "packageLocation": "./.yarn/cache/resolve-patch-bb62d3c3c5-ad59734723.zip/node_modules/resolve/",\
@@ -16511,7 +16502,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["hoist-non-react-statics", "npm:3.3.2"],\
             ["react", "npm:18.2.0"],\
             ["react-dom", "virtual:624dbf18cabda61da9740a87c183e0a43e7df2b6d3a7c6aec00b086c45c6fe2f7d5573685dfb19534ba6d8085e8cfbec55bfdd162bbf9cff9e8a2ed22ddf259a#npm:18.2.0"],\
-            ["react-is", null],\
+            ["react-is", "npm:18.2.0"],\
             ["shallowequal", "npm:1.1.0"],\
             ["supports-color", "npm:5.5.0"]\
           ],\
