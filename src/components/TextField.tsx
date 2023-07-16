@@ -24,10 +24,11 @@ interface TextFieldProps extends React.HTMLProps<HTMLInputElement> {
   validator?: Validator;
   label?: string;
   type?: HTMLInputTypeAttribute;
+  noSpaces?: boolean
 }
 
 const TextField = React.forwardRef<TextFieldRef, TextFieldProps>(
-  ({ onInput, validator, label, ...textInputProps }, ref) => {
+  ({ onInput, validator, label, noSpaces, ...textInputProps }, ref) => {
     const inputRef = useRef<HTMLInputElement>(null);
     const [touched, setTouched] = useState(false);
     const [isValid, setIsValid] = useState<boolean>(true);
@@ -57,6 +58,7 @@ const TextField = React.forwardRef<TextFieldRef, TextFieldProps>(
 
     const handleChange = useCallback<ChangeEventHandler<HTMLInputElement>>(
       async e => {
+        if (noSpaces) e.target.value = e.target.value.replace(/\s/g, "");
         const text = e.target.value;
         validate(text);
         onInput && onInput(e);

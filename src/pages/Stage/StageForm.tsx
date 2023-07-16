@@ -38,7 +38,7 @@ const StageForm = ({
   const renderAnswerInput = useCallback(
     (question: Question) => {
       switch (question.questionType) {
-        case 'chip':
+        case 'CHIP':
           return (
             <ChipTypeInput
               options={question.multipleChoiceList}
@@ -47,7 +47,7 @@ const StageForm = ({
               value={inputs[question.questionId] as number}
             />
           );
-        case 'MULTIPLE':
+        case 'CHECK_BOX':
           if (Array.isArray(inputs[question.questionId]))
             return (
               <CheckBoxTypeInput
@@ -66,7 +66,7 @@ const StageForm = ({
               value={inputs[question.questionId] as string}
             />
           );
-        case 'radio':
+        case 'RADIO':
           return (
             <RadioTypeInput
               options={question.multipleChoiceList}
@@ -98,7 +98,7 @@ const StageForm = ({
           number={startNumber + idx}
           title={q.questionTitle}
           subTitle={
-            q.questionType === 'MULTIPLE' ? '(중복 체크 가능)' : undefined
+            q.questionType === 'CHECK_BOX' ? '(중복 체크 가능)' : undefined
           }
         >
           {renderAnswerInput(q)}

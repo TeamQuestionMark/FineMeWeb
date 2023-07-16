@@ -8,6 +8,10 @@ import StageComponentsPage from './pages/StageComponentsPage';
 import DummyStagePage from './pages/Stage/DummyStagePage';
 import StagePreviewPage from './pages/Stage/StagePreviewPage';
 import ResultPage from './pages/Result/ResultPage';
+import StagePage from './pages/Stage/StagePage';
+import { QuestionsApi } from './api/stages';
+import StageLandingPage from './pages/Stage/StageLandingPage';
+import { stringToNumber } from './utils/stringToNumber';
 
 const router = createBrowserRouter([
   {
@@ -33,6 +37,20 @@ const router = createBrowserRouter([
   {
     path: '/result',
     element: <ResultPage />,
+  },
+  {
+    path: '/stages/:stageId',
+    element: <StageLandingPage />,
+    loader: ({params}) => {
+      return stringToNumber(params.stageId as string)
+    }
+  },
+  {
+    path: '/stages/:stageId/questions',
+    element: <StagePage />,
+    loader: ({ params }) => {
+      return QuestionsApi.get(stringToNumber(params.stageId as string), 1, 100);
+    },
   },
 ]);
 
