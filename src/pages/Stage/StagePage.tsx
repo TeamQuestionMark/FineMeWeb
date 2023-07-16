@@ -30,17 +30,15 @@ const StageFormWrapper = styled.div`
 const PAGE_SIZE = 5;
 const StagePage = () => {
   const methods = useStageForm();
-  const { validate, initForm, isFormReady } = methods;
+  const { initForm, isFormReady, inputs } = methods;
 
   const { stageName, stageQuestionPage, userId } =
     useLoaderData() as StageQuestionData;
   const [questions, setQuestions] = useState<Question[]>();
   const { page, setTotalPage, hasNext, next } = usePagination();
 
-  const currentQuestionIndices: number[] = useMemo(() => {
-    return Array(PAGE_SIZE)
-      .fill(PAGE_SIZE * (page - 1))
-      .map((key, idx) => key + idx);
+  const questionStartIdx: number = useMemo(() => {
+    return PAGE_SIZE * (page - 1);
   }, [page]);
 
   useEffect(() => {
@@ -76,13 +74,32 @@ const StagePage = () => {
     }
   }, [hasNext, next]);
 
+  const isValid = useMemo(() => {
+    const questionsIds = Object.keys(inputs).slice(
+      questionStartIdx,
+      questionStartIdx + PAGE_SIZE,
+    );
+
+    for (let i = 0; i < questionsIds.length; i++) {
+      const id = questionsIds[i];
+      const value = inputs[id];
+      if (value === undefined) return false;
+      if (typeof value !== 'number') {
+        if (value.length === 0) {
+          return false;
+        }
+      }
+    }
+    return true;
+  }, [inputs, questionStartIdx]);
+
   return (
     <Container>
       <StageImage src={ImgStageWork} />
       <StageFormWrapper>
         {isFormReady && questions && (
           <StageForm
-            startNumber={currentQuestionIndices[0] + 1}
+            startNumber={questionStartIdx + 1}
             useStageForm={methods}
             questions={questions}
           />
@@ -90,7 +107,7 @@ const StagePage = () => {
       </StageFormWrapper>
       <Button
         style={{ margin: '0 20px' }}
-        disabled={!validate(currentQuestionIndices)}
+        disabled={!isValid}
         onClick={handleClickNext}
       >
         {hasNext ? '다음으로' : '응답 완료'}

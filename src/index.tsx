@@ -9,7 +9,6 @@ import {
 import TypographyPage from './pages/TypographyPage';
 import { GlobalContainer } from './components/Layout/GlobalContainer';
 import StageComponentsPage from './pages/StageComponentsPage';
-import DummyStagePage from './pages/Stage/DummyStagePage';
 import StagePreviewPage from './pages/Stage/StagePreviewPage';
 import ResultPage from './pages/Result/ResultPage';
 import StagePage from './pages/Stage/StagePage';
@@ -30,10 +29,6 @@ const router = createBrowserRouter([
   {
     path: '/stage-components',
     element: <StageComponentsPage />,
-  },
-  {
-    path: '/stage',
-    element: <DummyStagePage />,
   },
   {
     path: '/stage/preview',
