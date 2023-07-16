@@ -14,6 +14,7 @@ import { Pagination } from '@/api/instance';
 import { Question } from '@/types/stage';
 import usePagination from '@/hooks/usePagination';
 import { useLoaderData } from 'react-router-dom';
+import { StageQuestionData } from '@/api/stages/questions';
 
 const Container = styled.div`
   padding-bottom: 63px;
@@ -31,7 +32,8 @@ const StagePage = () => {
   const methods = useStageForm();
   const { validate, initForm, isFormReady } = methods;
 
-  const data = useLoaderData() as Pagination<Question[]>;
+  const { stageName, stageQuestionPage, userId } =
+    useLoaderData() as StageQuestionData;
   const [questions, setQuestions] = useState<Question[]>();
   const { page, setTotalPage, hasNext, next } = usePagination();
 
@@ -42,14 +44,20 @@ const StagePage = () => {
   }, [page]);
 
   useEffect(() => {
-    initForm(data.contents);
-  }, [initForm]);
+    initForm(stageQuestionPage.content);
+  }, [initForm, stageQuestionPage.content]);
 
   useEffect(() => {
-    if (!data) return;
-    setTotalPage(Math.ceil(data.totalCount / PAGE_SIZE));
-    setQuestions(data.contents.slice(PAGE_SIZE * (page - 1), PAGE_SIZE * page));
-  }, [data, page, setTotalPage]);
+    setTotalPage(Math.ceil(stageQuestionPage.numberOfElements / PAGE_SIZE));
+    setQuestions(
+      stageQuestionPage.content.slice(PAGE_SIZE * (page - 1), PAGE_SIZE * page),
+    );
+  }, [
+    page,
+    setTotalPage,
+    stageQuestionPage.content,
+    stageQuestionPage.numberOfElements,
+  ]);
 
   useLayoutEffect(() => {
     document.body.style.backgroundColor = '#faf8f0';

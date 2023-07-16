@@ -45,15 +45,15 @@ const DummyStagePage = () => {
     setTimeout(() => {
       const data = dummyPagninatedQuetions(1, 15);
       console.log('fetch');
-      initForm(data?.contents);
+      initForm(data?.content);
       setData(data);
     }, 500);
   }, [initForm]);
 
   useEffect(() => {
     if (!data) return;
-    setTotalPage(Math.ceil(data.totalCount / PAGE_SIZE));
-    setQuestions(data.contents.slice(PAGE_SIZE * (page - 1), PAGE_SIZE * page));
+    setTotalPage(Math.ceil(data.totalElements / PAGE_SIZE));
+    setQuestions(data.content.slice(PAGE_SIZE * (page - 1), PAGE_SIZE * page));
   }, [data, page, setTotalPage]);
 
   useLayoutEffect(() => {

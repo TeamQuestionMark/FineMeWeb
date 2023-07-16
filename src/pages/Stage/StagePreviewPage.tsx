@@ -29,8 +29,8 @@ const StagePreviewPage = () => {
     setTimeout(() => {
       const data = dummyPagninatedQuetions(1, 15);
       console.log('fetch');
-      initForm(data?.contents);
-      setQuestions(data.contents);
+      initForm(data?.content);
+      setQuestions(data.content);
     }, 500);
   }, [initForm]);
 

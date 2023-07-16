@@ -7,9 +7,11 @@ export interface ResponseData<T> {
 }
 
 export interface Pagination<T> {
-  contents: T;
-  page: number;
-  totalCount: number;
+  content: T;
+  size: number;
+  number: number;
+  numberOfElements: number;
+  totalElements: number;
   totalPages: number;
 }
 
