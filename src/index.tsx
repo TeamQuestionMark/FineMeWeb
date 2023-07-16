@@ -41,9 +41,9 @@ const router = createBrowserRouter([
   {
     path: '/stages/:stageId',
     element: <StageLandingPage />,
-    loader: ({params}) => {
-      return stringToNumber(params.stageId as string)
-    }
+    loader: ({ params }) => {
+      return stringToNumber(params.stageId as string);
+    },
   },
   {
     path: '/stages/:stageId/questions',
