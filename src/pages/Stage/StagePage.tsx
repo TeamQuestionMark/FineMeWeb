@@ -138,6 +138,7 @@ const StagePage = ({ preview }: StagePageProps) => {
       <StageFormWrapper>
         {isFormReady && questions && (
           <StageForm
+            custom={userId !== undefined}
             startNumber={questionStartIdx + 1}
             useStageForm={methods}
             questions={questions}
