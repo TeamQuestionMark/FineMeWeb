@@ -18,8 +18,9 @@ body {
   font-family: SUIT Variable;
 }
 
-input {
-  outline: none;
+input,
+textarea {
+  all: unset;
 }
 
 button {
