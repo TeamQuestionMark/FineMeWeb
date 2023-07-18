@@ -1,6 +1,5 @@
 import StageForm from '@/pages/Stage/StageForm';
 import useStageForm from '@/hooks/useStageForm';
-import ImgStageWork from '@/assets/images/Stage/stage-work@3x.png';
 import styled from 'styled-components';
 import Button from '@/components/Button';
 import {
@@ -10,17 +9,24 @@ import {
   useMemo,
   useState,
 } from 'react';
-import { Pagination } from '@/api/instance';
 import { Question } from '@/types/stage';
 import usePagination from '@/hooks/usePagination';
 import { useLoaderData } from 'react-router-dom';
 import { StageQuestionData } from '@/api/stages/questions';
+import getStageImage from '@/utils/getStageImage';
+import { COLORS } from '@/themes/colors';
+import { Body2 } from '@/components/Typography';
 
 const Container = styled.div`
   padding-bottom: 63px;
 `;
 const StageImage = styled.img<{}>`
   width: 100%;
+`;
+const CustomStageImage = styled.div`
+  border-radius: 5px;
+  background-color: ${COLORS.brandColor100};
+  padding: 10px;
 `;
 
 const StageFormWrapper = styled.div`
@@ -95,7 +101,12 @@ const StagePage = () => {
 
   return (
     <Container>
-      <StageImage src={ImgStageWork} />
+      {userId && <StageImage src={getStageImage(stageName)} />}
+      {!userId && (
+        <CustomStageImage>
+          <Body2 color="brandColor800">{stageName}</Body2>
+        </CustomStageImage>
+      )}
       <StageFormWrapper>
         {isFormReady && questions && (
           <StageForm
