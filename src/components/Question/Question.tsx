@@ -17,7 +17,7 @@ const StyledQuestion = styled.div`
 `;
 
 const StyledNumber = styled.div`
-  width: 22px;
+  min-width: 22px;
   height: 22px;
   display: flex;
   justify-content: center;
