@@ -15,6 +15,7 @@ import { QuestionsApi } from './api/stages';
 import StageLandingPage from './pages/Stage/StageLandingPage';
 import { stringToNumber } from './utils/stringToNumber';
 import { SESSION_STORAGE_KEY } from './constants/storage';
+import StageCompletedPage from './pages/Stage/StageCompletedPage';
 
 const router = createBrowserRouter([
   {
@@ -59,6 +60,10 @@ const router = createBrowserRouter([
       if (!nickname) return redirect(`/stages/${stageId}`);
       return await QuestionsApi.get(stageId, 1, 100);
     },
+  },
+  {
+    path: '/stages/:stageId/completed/:nickname',
+    element: <StageCompletedPage />,
   },
 ]);
 
