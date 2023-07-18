@@ -16,6 +16,9 @@ import { StageQuestionData } from '@/api/stages/questions';
 import getStageImage from '@/utils/getStageImage';
 import { COLORS } from '@/themes/colors';
 import { Body2 } from '@/components/Typography';
+import { PAGE_SIZE } from '@/constants/stage';
+import share from '@/utils/share';
+import copy from '@/utils/copy';
 
 const Container = styled.div`
   padding-bottom: 63px;
@@ -33,8 +36,10 @@ const StageFormWrapper = styled.div`
   transform: translateY(-44px);
 `;
 
-const PAGE_SIZE = 5;
-const StagePage = () => {
+type StagePageProps = {
+  preview?: boolean;
+};
+const StagePage = ({ preview }: StagePageProps) => {
   const methods = useStageForm();
   const { initForm, isFormReady, inputs } = methods;
 
@@ -72,13 +77,24 @@ const StagePage = () => {
   });
 
   const handleClickNext = useCallback(() => {
-    if (hasNext) {
-      next();
-      window.scrollTo(0, 0);
-    } else {
-      // 제출
+    next();
+    window.scrollTo(0, 0);
+  }, [next]);
+
+  const submit = useCallback(() => {}, []);
+
+  const handleClickShare = useCallback(async () => {
+    const url = 'https://TODO.com';
+    const result = await share({
+      title: '스테이지 공유하기',
+      url: url,
+      text: stageName,
+    });
+    if (result !== 'SUCCEED') {
+      const succeed = await copy(url);
+      succeed && window.alert('클립보드에 복사하였습니다');
     }
-  }, [hasNext, next]);
+  }, [stageName]);
 
   const isValid = useMemo(() => {
     const questionsIds = Object.keys(inputs).slice(
@@ -101,8 +117,8 @@ const StagePage = () => {
 
   return (
     <Container>
-      {userId && <StageImage src={getStageImage(stageName)} />}
-      {!userId && (
+      {!userId && <StageImage src={getStageImage(stageName)} />}
+      {userId && (
         <CustomStageImage>
           <Body2 color="brandColor800">{stageName}</Body2>
         </CustomStageImage>
@@ -116,13 +132,23 @@ const StagePage = () => {
           />
         )}
       </StageFormWrapper>
-      <Button
-        style={{ margin: '0 20px' }}
-        disabled={!isValid}
-        onClick={handleClickNext}
-      >
-        {hasNext ? '다음으로' : '응답 완료'}
-      </Button>
+      {!preview && (
+        <Button
+          style={{ margin: '0 20px' }}
+          disabled={!isValid}
+          onClick={hasNext ? handleClickNext : submit}
+        >
+          {hasNext ? '다음으로' : '응답 완료'}
+        </Button>
+      )}
+      {preview && (
+        <Button
+          style={{ margin: '0 20px' }}
+          onClick={hasNext ? handleClickNext : handleClickShare}
+        >
+          {hasNext ? '다음으로' : '공유 하기'}
+        </Button>
+      )}
     </Container>
   );
 };

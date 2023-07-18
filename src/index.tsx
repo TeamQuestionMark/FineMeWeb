@@ -9,7 +9,6 @@ import {
 import TypographyPage from './pages/TypographyPage';
 import { GlobalContainer } from './components/Layout/GlobalContainer';
 import StageComponentsPage from './pages/StageComponentsPage';
-import StagePreviewPage from './pages/Stage/StagePreviewPage';
 import ResultPage from './pages/Result/ResultPage';
 import StagePage from './pages/Stage/StagePage';
 import { QuestionsApi } from './api/stages';
@@ -31,12 +30,16 @@ const router = createBrowserRouter([
     element: <StageComponentsPage />,
   },
   {
-    path: '/stage/preview',
-    element: <StagePreviewPage />,
-  },
-  {
     path: '/result',
     element: <ResultPage />,
+  },
+  {
+    path: '/stages/:stageId/preview',
+    element: <StagePage preview />,
+    loader: async ({ params }) => {
+      const stageId = stringToNumber(params.stageId as string);
+      return await QuestionsApi.get(stageId, 1, 100);
+    },
   },
   {
     path: '/stages/:stageId',
