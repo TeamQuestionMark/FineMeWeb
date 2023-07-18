@@ -21,6 +21,8 @@ import share from '@/utils/share';
 import copy from '@/utils/copy';
 import { stringToNumber } from '@/utils/stringToNumber';
 import { SESSION_STORAGE_KEY } from '@/constants/storage';
+import PageNavigator from '@/components/PageNavigator';
+import { GLOBAL_PADDING_X } from '@/themes/layout';
 
 const Container = styled.div`
   padding-bottom: 63px;
@@ -51,7 +53,7 @@ const StagePage = ({ preview }: StagePageProps) => {
   const { stageName, stageQuestionPage, userId } =
     useLoaderData() as StageQuestionData;
   const [questions, setQuestions] = useState<Question[]>();
-  const { page, setTotalPage, hasNext, next } = usePagination();
+  const { page, setTotalPages, hasNext, navigatorProps } = usePagination();
 
   const questionStartIdx: number = useMemo(() => {
     return PAGE_SIZE * (page - 1);
@@ -62,13 +64,13 @@ const StagePage = ({ preview }: StagePageProps) => {
   }, [initForm, stageQuestionPage.content]);
 
   useEffect(() => {
-    setTotalPage(Math.ceil(stageQuestionPage.numberOfElements / PAGE_SIZE));
+    setTotalPages(Math.ceil(stageQuestionPage.numberOfElements / PAGE_SIZE));
     setQuestions(
       stageQuestionPage.content.slice(PAGE_SIZE * (page - 1), PAGE_SIZE * page),
     );
   }, [
     page,
-    setTotalPage,
+    setTotalPages,
     stageQuestionPage.content,
     stageQuestionPage.numberOfElements,
   ]);
@@ -81,10 +83,9 @@ const StagePage = ({ preview }: StagePageProps) => {
     };
   });
 
-  const handleClickNext = useCallback(() => {
-    next();
+  useEffect(() => {
     window.scrollTo(0, 0);
-  }, [next]);
+  }, [page]);
 
   const submit = useCallback(() => {
     const nickname = sessionStorage.getItem(
@@ -143,21 +144,22 @@ const StagePage = ({ preview }: StagePageProps) => {
           />
         )}
       </StageFormWrapper>
-      {!preview && (
+      {<PageNavigator {...navigatorProps} />}
+      {!preview && !hasNext && (
         <Button
-          style={{ margin: '0 20px' }}
+          style={{ margin: `30px ${GLOBAL_PADDING_X}px 0 ` }}
           disabled={!isValid}
-          onClick={hasNext ? handleClickNext : submit}
+          onClick={submit}
         >
-          {hasNext ? '다음으로' : '응답 완료'}
+          응답 완료
         </Button>
       )}
-      {preview && (
+      {preview && !hasNext && (
         <Button
-          style={{ margin: '0 20px' }}
-          onClick={hasNext ? handleClickNext : handleClickShare}
+          style={{ margin: `30px ${GLOBAL_PADDING_X}px 0 ` }}
+          onClick={handleClickShare}
         >
-          {hasNext ? '다음으로' : '공유 하기'}
+          공유 하기
         </Button>
       )}
     </Container>
