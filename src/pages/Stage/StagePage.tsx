@@ -11,7 +11,7 @@ import {
 } from 'react';
 import { Question } from '@/types/stage';
 import usePagination from '@/hooks/usePagination';
-import { useLoaderData } from 'react-router-dom';
+import { useLoaderData, useParams } from 'react-router-dom';
 import { StageQuestionData } from '@/api/stages/questions';
 import getStageImage from '@/utils/getStageImage';
 import { COLORS } from '@/themes/colors';
@@ -19,6 +19,7 @@ import { Body2 } from '@/components/Typography';
 import { PAGE_SIZE } from '@/constants/stage';
 import share from '@/utils/share';
 import copy from '@/utils/copy';
+import { stringToNumber } from '@/utils/stringToNumber';
 
 const Container = styled.div`
   padding-bottom: 63px;
@@ -41,6 +42,8 @@ type StagePageProps = {
 };
 const StagePage = ({ preview }: StagePageProps) => {
   const methods = useStageForm();
+  const params = useParams();
+  const stageId = stringToNumber(params.stageId);
   const { initForm, isFormReady, inputs } = methods;
 
   const { stageName, stageQuestionPage, userId } =
@@ -117,7 +120,7 @@ const StagePage = ({ preview }: StagePageProps) => {
 
   return (
     <Container>
-      {!userId && <StageImage src={getStageImage(stageName)} />}
+      {!userId && <StageImage src={getStageImage(stageId)} />}
       {userId && (
         <CustomStageImage>
           <Body2 color="brandColor800">{stageName}</Body2>
