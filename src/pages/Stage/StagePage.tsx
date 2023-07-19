@@ -1,6 +1,6 @@
 import StageForm from '@/pages/Stage/StageForm';
 import useStageForm from '@/hooks/useStageForm';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import Button from '@/components/Button';
 import {
   useCallback,
@@ -30,14 +30,22 @@ const Container = styled.div`
 const StageImage = styled.img<{}>`
   width: 100%;
 `;
-const CustomStageImage = styled.div`
+const CustomStageTitle = styled.div`
   border-radius: 5px;
   background-color: ${COLORS.brandColor100};
   padding: 10px;
+  margin: 72px ${GLOBAL_PADDING_X}px 30px;
 `;
 
-const StageFormWrapper = styled.div`
-  transform: translateY(-44px);
+const StageFormWrapper = styled.div<{ custom?: boolean }>`
+  ${({ custom }) => !custom && formBoxCss};
+`;
+
+const formBoxCss = css`
+  border-radius: 15px;
+  border: 2px solid ${COLORS.gray900};
+  padding: 40px 0;
+  background: ${COLORS.white};
 `;
 
 type StagePageProps = {
@@ -52,6 +60,7 @@ const StagePage = ({ preview }: StagePageProps) => {
 
   const { stageName, stageQuestionPage, userId } =
     useLoaderData() as StageQuestionData;
+  const isCustom = useMemo(() => userId !== undefined, [userId]);
   const [questions, setQuestions] = useState<Question[]>();
   const { page, setTotalPages, hasNext, navigatorProps } = usePagination();
 
@@ -76,12 +85,14 @@ const StagePage = ({ preview }: StagePageProps) => {
   ]);
 
   useLayoutEffect(() => {
-    document.body.style.backgroundColor = '#faf8f0';
+    if (!isCustom) {
+      document.body.style.backgroundColor = '#faf8f0';
+    }
 
     return () => {
       document.body.style.backgroundColor = '';
     };
-  });
+  }, [isCustom]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -129,40 +140,43 @@ const StagePage = ({ preview }: StagePageProps) => {
 
   return (
     <Container>
-      {!userId && <StageImage src={getStageImage(stageId)} />}
-      {userId && (
-        <CustomStageImage>
+      {!isCustom && <StageImage src={getStageImage(stageId)} />}
+      {isCustom && (
+        <CustomStageTitle>
           <Body2 color="brandColor800">{stageName}</Body2>
-        </CustomStageImage>
+        </CustomStageTitle>
       )}
-      <StageFormWrapper>
-        {isFormReady && questions && (
-          <StageForm
-            custom={userId !== undefined}
-            startNumber={questionStartIdx + 1}
-            useStageForm={methods}
-            questions={questions}
-          />
+      <form style={!isCustom ? { transform: 'translateY(-44px)' } : undefined}>
+        <StageFormWrapper custom={isCustom}>
+          {isFormReady && questions && (
+            <StageForm
+              custom={isCustom}
+              startNumber={questionStartIdx + 1}
+              useStageForm={methods}
+              questions={questions}
+            />
+          )}
+        </StageFormWrapper>
+
+        {<PageNavigator style={{ marginTop: '40px' }} {...navigatorProps} />}
+        {!preview && !hasNext && (
+          <Button
+            style={{ margin: `30px ${GLOBAL_PADDING_X}px 0 ` }}
+            disabled={!isValid}
+            onClick={submit}
+          >
+            응답 완료
+          </Button>
         )}
-      </StageFormWrapper>
-      {<PageNavigator {...navigatorProps} />}
-      {!preview && !hasNext && (
-        <Button
-          style={{ margin: `30px ${GLOBAL_PADDING_X}px 0 ` }}
-          disabled={!isValid}
-          onClick={submit}
-        >
-          응답 완료
-        </Button>
-      )}
-      {preview && !hasNext && (
-        <Button
-          style={{ margin: `30px ${GLOBAL_PADDING_X}px 0 ` }}
-          onClick={handleClickShare}
-        >
-          공유 하기
-        </Button>
-      )}
+        {preview && !hasNext && (
+          <Button
+            style={{ margin: `30px ${GLOBAL_PADDING_X}px 0 ` }}
+            onClick={handleClickShare}
+          >
+            공유 하기
+          </Button>
+        )}
+      </form>
     </Container>
   );
 };

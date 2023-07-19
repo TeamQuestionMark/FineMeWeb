@@ -13,7 +13,7 @@ interface QuestionProps extends PropsWithChildren {
 const StyledQuestion = styled.div`
   display: flex;
   column-gap: 8px;
-  margin-bottom: 17px;
+  margin-bottom: 16px;
 `;
 
 const StyledNumber = styled.div`
@@ -27,7 +27,7 @@ const StyledNumber = styled.div`
 `;
 
 const StyledInputWrapper = styled.div`
-  padding: 0 10px 0 21px;
+  padding-left: 22px;
 `;
 
 const QuestionUI = ({ number, title, subTitle, children }: QuestionProps) => {
