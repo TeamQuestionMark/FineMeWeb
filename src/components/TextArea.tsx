@@ -59,15 +59,23 @@ const TextArea = React.forwardRef<TextAreaRef, TextAreaProps>(
       [validator],
     );
 
+    const adjustHeight = useCallback(() => {
+      if (!inputRef.current) return;
+      inputRef.current.style.height = 'auto';
+      const scrollHeight = inputRef.current.scrollHeight;
+      inputRef.current.style.height = scrollHeight + 'px';
+    }, []);
+
     const handleChange = useCallback<ChangeEventHandler<HTMLTextAreaElement>>(
       async e => {
         if (noSpaces) e.target.value = e.target.value.replace(/\s/g, '');
         const text = e.target.value;
         validate(text);
         setLength(text.length);
+        adjustHeight();
         onInput && onInput(e);
       },
-      [noSpaces, validate, onInput],
+      [noSpaces, validate, adjustHeight, onInput],
     );
 
     const handleBlur = useCallback<
@@ -115,10 +123,14 @@ const TextArea = React.forwardRef<TextAreaRef, TextAreaProps>(
             onBlur={handleBlur}
             id={textInputProps.name}
             name={textInputProps.id}
+            maxLength={maxLength}
             {...textInputProps}
           />
           {maxLength && (
-            <Body2 color="gray200" style={{ textAlign: 'right' }}>
+            <Body2
+              color="gray200"
+              style={{ textAlign: 'right', marginTop: '10px' }}
+            >
               {length} / {maxLength}
             </Body2>
           )}
@@ -154,7 +166,7 @@ const StyledTextarea = styled.div<{
     color: ${COLORS.gray900};
     overflow-wrap: break-word;
     width: -webkit-fill-available;
-    height: 45px;
+    height: 35px;
 
     ${({ inputType }) =>
       inputType === 'date' &&
