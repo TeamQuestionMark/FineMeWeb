@@ -3,10 +3,10 @@ import PageLayout from '@/components/Layout/PageLayout';
 import TextField, { TextFieldRef } from '@/components/TextField';
 import { Headline2 } from '@/components/Typography';
 import { SESSION_STORAGE_KEY } from '@/constants/storage';
+import { LoaderData } from '@/router/types';
 import Validator from '@/utils/Validator';
-import { stringToNumber } from '@/utils/stringToNumber';
 import { useRef, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useLoaderData, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 const Container = styled.div`
@@ -24,8 +24,7 @@ const StageLandingPage = () => {
   const [nickname, setNickname] = useState('');
   const [isValid, setIsValid] = useState(false);
   const inputRef = useRef<TextFieldRef>(null);
-  const params = useParams();
-  const stageId = stringToNumber(params.stageId);
+  const { userId, stageId } = useLoaderData() as LoaderData['StageLandingPage'];
 
   const handleInput: React.FormEventHandler<HTMLInputElement> = async e => {
     setNickname(e.currentTarget.value);
@@ -35,8 +34,11 @@ const StageLandingPage = () => {
   };
 
   const handleSubmit = () => {
-    sessionStorage.setItem(SESSION_STORAGE_KEY.nickname(stageId), nickname);
-    navigate('/questions', { relative: 'path' });
+    sessionStorage.setItem(
+      SESSION_STORAGE_KEY.nickname(stageId, userId),
+      nickname,
+    );
+    navigate('./questions' + window.location.search);
   };
 
   return (

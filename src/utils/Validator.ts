@@ -23,7 +23,7 @@ export default class Validator {
   };
 
   max = (max: number) => {
-    this.chain.push((input: string) => input.length < max);
+    this.chain.push((input: string) => input.length <= max);
     return this;
   };
 

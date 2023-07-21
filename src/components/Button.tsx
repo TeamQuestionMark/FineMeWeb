@@ -80,9 +80,7 @@ const Button: React.FC<ButtonProps> = ({
       disabled={disabled}
       onClick={onClick}
     >
-      <Body4 style={{ transform: 'translateY(2px)' }} element={'label'}>
-        {children}
-      </Body4>
+      <Body4 element={'label'}>{children}</Body4>
     </StyledButton>
   );
 };

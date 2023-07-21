@@ -11,30 +11,34 @@ import React, {
   useState,
 } from 'react';
 import styled from 'styled-components';
-import { Body4 } from './Typography';
+import { Body2, Body4 } from './Typography';
 import { typographyCss } from './Typography/styles';
 
-export type TextFieldRef = HTMLInputElement & {
+export type TextAreaRef = HTMLTextAreaElement & {
   isValid: boolean;
   setIsValid: Dispatch<SetStateAction<boolean>>;
   validate: (text?: string) => Promise<boolean>;
 };
 
-interface TextFieldProps extends React.HTMLProps<HTMLInputElement> {
+interface TextAreaProps extends React.HTMLProps<HTMLTextAreaElement> {
   validator?: Validator;
   label?: string;
   type?: HTMLInputTypeAttribute;
   noSpaces?: boolean;
 }
 
-const TextField = React.forwardRef<TextFieldRef, TextFieldProps>(
-  ({ onInput, validator, label, noSpaces, ...textInputProps }, ref) => {
-    const inputRef = useRef<HTMLInputElement>(null);
+const TextArea = React.forwardRef<TextAreaRef, TextAreaProps>(
+  (
+    { onInput, validator, label, noSpaces, maxLength = 100, ...textInputProps },
+    ref,
+  ) => {
+    const inputRef = useRef<HTMLTextAreaElement>(null);
     const [touched, setTouched] = useState(false);
     const [isValid, setIsValid] = useState<boolean>(true);
+    const [length, setLength] = useState(0);
 
     useImperativeHandle(ref, () => ({
-      ...(inputRef.current as HTMLInputElement),
+      ...(inputRef.current as HTMLTextAreaElement),
       isValid,
       setIsValid,
       validate,
@@ -55,17 +59,28 @@ const TextField = React.forwardRef<TextFieldRef, TextFieldProps>(
       [validator],
     );
 
-    const handleChange = useCallback<ChangeEventHandler<HTMLInputElement>>(
+    const adjustHeight = useCallback(() => {
+      if (!inputRef.current) return;
+      inputRef.current.style.height = 'auto';
+      const scrollHeight = inputRef.current.scrollHeight;
+      inputRef.current.style.height = scrollHeight + 'px';
+    }, []);
+
+    const handleChange = useCallback<ChangeEventHandler<HTMLTextAreaElement>>(
       async e => {
         if (noSpaces) e.target.value = e.target.value.replace(/\s/g, '');
         const text = e.target.value;
         validate(text);
+        setLength(text.length);
+        adjustHeight();
         onInput && onInput(e);
       },
-      [noSpaces, validate, onInput],
+      [noSpaces, validate, adjustHeight, onInput],
     );
 
-    const handleBlur = useCallback<React.FocusEventHandler<HTMLInputElement>>(
+    const handleBlur = useCallback<
+      React.FocusEventHandler<HTMLTextAreaElement>
+    >(
       async e => {
         const text = e.target.value;
         validate(text);
@@ -73,7 +88,9 @@ const TextField = React.forwardRef<TextFieldRef, TextFieldProps>(
       [validate],
     );
 
-    const handleFocus = useCallback<React.FocusEventHandler<HTMLInputElement>>(
+    const handleFocus = useCallback<
+      React.FocusEventHandler<HTMLTextAreaElement>
+    >(
       async e => {
         if (touched) {
           const text = e.target.value;
@@ -97,8 +114,8 @@ const TextField = React.forwardRef<TextFieldRef, TextFieldProps>(
             {label}
           </Body4>
         )}
-        <StyledInput error={!isValid} inputType={textInputProps.type}>
-          <input
+        <StyledTextarea error={!isValid} inputType={textInputProps.type}>
+          <textarea
             ref={inputRef}
             aria-label={label || textInputProps.name || textInputProps.id}
             onChange={handleChange}
@@ -106,29 +123,50 @@ const TextField = React.forwardRef<TextFieldRef, TextFieldProps>(
             onBlur={handleBlur}
             id={textInputProps.name}
             name={textInputProps.id}
+            maxLength={maxLength}
             {...textInputProps}
           />
-        </StyledInput>
+          {maxLength && (
+            <Body2
+              color="gray200"
+              style={{ textAlign: 'right', marginTop: '10px' }}
+            >
+              {length} / {maxLength}
+            </Body2>
+          )}
+        </StyledTextarea>
       </div>
     );
   },
 );
 
-TextField.displayName = 'TextField';
-export default TextField;
+TextArea.displayName = 'TextArea';
+export default TextArea;
 
-const StyledInput = styled.div<{
+const StyledTextarea = styled.div<{
   error: boolean;
   inputType?: React.HTMLInputTypeAttribute;
 }>`
-  input {
-    width: -webkit-fill-available;
-    padding: 14px 16px;
-    border-radius: 10px;
-    border: 2px solid ${COLORS.gray900};
-    background-color: ${COLORS.white};
+  padding: 14px;
+  border-radius: 10px;
+  border: 2px solid ${COLORS.gray900};
+  background-color: ${COLORS.white};
+
+  ${({ error }) => error && `border-color: ${COLORS.error100}`};
+  :has(textarea:disabled) {
+    background-color: ${COLORS.gray200};
+  }
+  :has(textarea:focus),
+  :has(textarea:focus-within) {
+    ${({ error }) => !error && `border-color: ${COLORS.active100}`};
+  }
+
+  textarea {
     ${typographyCss.body1}
     color: ${COLORS.gray900};
+    overflow-wrap: break-word;
+    width: -webkit-fill-available;
+    height: 35px;
 
     ${({ inputType }) =>
       inputType === 'date' &&
@@ -141,15 +179,6 @@ const StyledInput = styled.div<{
     ::placeholder {
       ${typographyCss.body1}
       color: ${COLORS.textPlaceholder};
-    }
-
-    ${({ error }) => error && `border-color: ${COLORS.error100}`};
-    :disabled {
-      background-color: ${COLORS.gray200};
-    }
-    :focus,
-    :focus-within {
-      ${({ error }) => !error && `border-color: ${COLORS.active100}`};
     }
   }
 `;

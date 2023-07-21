@@ -1,7 +1,6 @@
 import StageForm from '@/pages/Stage/StageForm';
 import useStageForm from '@/hooks/useStageForm';
-import ImgStageWork from '@/assets/images/Stage/stage-work@3x.png';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import Button from '@/components/Button';
 import {
   useCallback,
@@ -10,10 +9,19 @@ import {
   useMemo,
   useState,
 } from 'react';
-import { Pagination } from '@/api/instance';
 import { Question } from '@/types/stage';
 import usePagination from '@/hooks/usePagination';
-import { useLoaderData } from 'react-router-dom';
+import { useLoaderData, useNavigate } from 'react-router-dom';
+import getStageImage from '@/utils/getStageImage';
+import { COLORS } from '@/themes/colors';
+import { Body2 } from '@/components/Typography';
+import { PAGE_SIZE } from '@/constants/stage';
+import share from '@/utils/share';
+import copy from '@/utils/copy';
+import { SESSION_STORAGE_KEY } from '@/constants/storage';
+import PageNavigator from '@/components/PageNavigator';
+import { GLOBAL_PADDING_X } from '@/themes/layout';
+import { LoaderData } from '@/router/types';
 
 const Container = styled.div`
   padding-bottom: 63px;
@@ -21,72 +29,153 @@ const Container = styled.div`
 const StageImage = styled.img<{}>`
   width: 100%;
 `;
-
-const StageFormWrapper = styled.div`
-  transform: translateY(-44px);
+const CustomStageTitle = styled.div`
+  border-radius: 5px;
+  background-color: ${COLORS.brandColor100};
+  padding: 10px;
+  margin: 72px ${GLOBAL_PADDING_X}px 30px;
 `;
 
-const PAGE_SIZE = 5;
-const StagePage = () => {
+const StageFormWrapper = styled.div<{ custom?: boolean }>`
+  ${({ custom }) => !custom && formBoxCss};
+`;
+
+const formBoxCss = css`
+  border-radius: 15px;
+  border: 2px solid ${COLORS.gray900};
+  padding: 40px 0;
+  background: ${COLORS.white};
+`;
+
+type StagePageProps = {
+  preview?: boolean;
+};
+const StagePage = ({ preview }: StagePageProps) => {
+  const navigate = useNavigate();
   const methods = useStageForm();
-  const { validate, initForm, isFormReady } = methods;
+  const { initForm, isFormReady, inputs } = methods;
 
-  const data = useLoaderData() as Pagination<Question[]>;
+  const { stageName, stageQuestionPage, userId, isCustom, stageId } =
+    useLoaderData() as LoaderData['StagePage'];
   const [questions, setQuestions] = useState<Question[]>();
-  const { page, setTotalPage, hasNext, next } = usePagination();
+  const { page, setTotalPages, hasNext, navigatorProps } = usePagination();
 
-  const currentQuestionIndices: number[] = useMemo(() => {
-    return Array(PAGE_SIZE)
-      .fill(PAGE_SIZE * (page - 1))
-      .map((key, idx) => key + idx);
+  const questionStartIdx: number = useMemo(() => {
+    return PAGE_SIZE * (page - 1);
   }, [page]);
 
   useEffect(() => {
-    initForm(data.contents);
-  }, [initForm]);
+    initForm(stageQuestionPage.content);
+  }, [initForm, stageQuestionPage.content]);
 
   useEffect(() => {
-    if (!data) return;
-    setTotalPage(Math.ceil(data.totalCount / PAGE_SIZE));
-    setQuestions(data.contents.slice(PAGE_SIZE * (page - 1), PAGE_SIZE * page));
-  }, [data, page, setTotalPage]);
+    setTotalPages(Math.ceil(stageQuestionPage.numberOfElements / PAGE_SIZE));
+    setQuestions(
+      stageQuestionPage.content.slice(PAGE_SIZE * (page - 1), PAGE_SIZE * page),
+    );
+  }, [
+    page,
+    setTotalPages,
+    stageQuestionPage.content,
+    stageQuestionPage.numberOfElements,
+  ]);
 
   useLayoutEffect(() => {
-    document.body.style.backgroundColor = '#faf8f0';
+    if (!isCustom) {
+      document.body.style.backgroundColor = '#faf8f0';
+    }
 
     return () => {
       document.body.style.backgroundColor = '';
     };
-  });
+  }, [isCustom]);
 
-  const handleClickNext = useCallback(() => {
-    if (hasNext) {
-      next();
-      window.scrollTo(0, 0);
-    } else {
-      // 제출
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [page]);
+
+  const submit = useCallback(() => {
+    const nickname = sessionStorage.getItem(
+      SESSION_STORAGE_KEY.nickname(stageId, userId),
+    );
+    sessionStorage.removeItem(SESSION_STORAGE_KEY.nickname(stageId, userId));
+    navigate(`/stages/${stageId}/completed/${nickname}`);
+  }, [navigate, stageId, userId]);
+
+  const handleClickShare = useCallback<
+    React.MouseEventHandler<HTMLButtonElement>
+  >(async e => {
+    e.preventDefault();
+    const url = 'https://TODO.com';
+    const result = await share({
+      title: `당신이 보는 내 모습은?`,
+      text: url,
+      url: url,
+    });
+    if (result !== 'SUCCEED') {
+      const succeed = await copy(url);
+      succeed && window.alert('클립보드에 복사하였습니다');
     }
-  }, [hasNext, next]);
+  }, []);
+
+  const isValid = useMemo(() => {
+    const questionsIds = Object.keys(inputs).slice(
+      questionStartIdx,
+      questionStartIdx + PAGE_SIZE,
+    );
+
+    for (let i = 0; i < questionsIds.length; i++) {
+      const id = questionsIds[i];
+      const value = inputs[id];
+      if (value === undefined) return false;
+      if (typeof value !== 'number') {
+        if (value.length === 0) {
+          return false;
+        }
+      }
+    }
+    return true;
+  }, [inputs, questionStartIdx]);
 
   return (
     <Container>
-      <StageImage src={ImgStageWork} />
-      <StageFormWrapper>
-        {isFormReady && questions && (
-          <StageForm
-            startNumber={currentQuestionIndices[0] + 1}
-            useStageForm={methods}
-            questions={questions}
-          />
+      {!isCustom && <StageImage src={getStageImage(stageId)} />}
+      {isCustom && (
+        <CustomStageTitle>
+          <Body2 color="brandColor800">{stageName}</Body2>
+        </CustomStageTitle>
+      )}
+      <form style={!isCustom ? { transform: 'translateY(-44px)' } : undefined}>
+        <StageFormWrapper custom={isCustom}>
+          {isFormReady && questions && (
+            <StageForm
+              custom={isCustom}
+              startNumber={questionStartIdx + 1}
+              useStageForm={methods}
+              questions={questions}
+            />
+          )}
+        </StageFormWrapper>
+
+        {<PageNavigator style={{ marginTop: '40px' }} {...navigatorProps} />}
+        {!preview && !hasNext && (
+          <Button
+            style={{ margin: `30px ${GLOBAL_PADDING_X}px 0 ` }}
+            disabled={!isValid}
+            onClick={submit}
+          >
+            응답 완료
+          </Button>
         )}
-      </StageFormWrapper>
-      <Button
-        style={{ margin: '0 20px' }}
-        disabled={!validate(currentQuestionIndices)}
-        onClick={handleClickNext}
-      >
-        {hasNext ? '다음으로' : '응답 완료'}
-      </Button>
+        {preview && !hasNext && (
+          <Button
+            style={{ margin: `30px ${GLOBAL_PADDING_X}px 0 ` }}
+            onClick={handleClickShare}
+          >
+            공유 하기
+          </Button>
+        )}
+      </form>
     </Container>
   );
 };

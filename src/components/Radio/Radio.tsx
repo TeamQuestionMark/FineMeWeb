@@ -13,10 +13,11 @@ export interface RadioProps {
 }
 
 const StyledRadio = styled.button<{ imageSrc: string }>`
-  width: 20px;
-  height: 20px;
+  min-width: 20px;
+  min-height: 20px;
   background-image: ${({ imageSrc }) => `url(${imageSrc})`};
   background-size: contain;
+  background-repeat: no-repeat;
 
   :disabled {
     cursor: not-allowed;
