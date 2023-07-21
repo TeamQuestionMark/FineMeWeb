@@ -139,14 +139,19 @@ const StagePage = ({ preview }: StagePageProps) => {
 
   return (
     <Container>
-      {!isCustom && <StageImage src={getStageImage(stageId)} />}
-      {isCustom && (
+      {preview || !isCustom ? (
+        <StageImage src={getStageImage(stageId)} />
+      ) : (
         <CustomStageTitle>
           <Body2 color="brandColor800">{stageName}</Body2>
         </CustomStageTitle>
       )}
-      <form style={!isCustom ? { transform: 'translateY(-44px)' } : undefined}>
-        <StageFormWrapper custom={isCustom}>
+      <form
+        style={
+          preview || !isCustom ? { transform: 'translateY(-44px)' } : undefined
+        }
+      >
+        <StageFormWrapper custom={!preview && isCustom}>
           {isFormReady && questions && (
             <StageForm
               custom={isCustom}
