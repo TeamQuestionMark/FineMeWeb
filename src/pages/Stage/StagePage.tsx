@@ -11,18 +11,17 @@ import {
 } from 'react';
 import { Question } from '@/types/stage';
 import usePagination from '@/hooks/usePagination';
-import { useLoaderData, useNavigate, useParams } from 'react-router-dom';
+import { useLoaderData, useNavigate } from 'react-router-dom';
 import getStageImage from '@/utils/getStageImage';
 import { COLORS } from '@/themes/colors';
 import { Body2 } from '@/components/Typography';
 import { PAGE_SIZE } from '@/constants/stage';
 import share from '@/utils/share';
 import copy from '@/utils/copy';
-import { stringToNumber } from '@/utils/stringToNumber';
 import { SESSION_STORAGE_KEY } from '@/constants/storage';
 import PageNavigator from '@/components/PageNavigator';
 import { GLOBAL_PADDING_X } from '@/themes/layout';
-import { StagePageLoaderData } from '@/index';
+import { LoaderData } from '@/router/types';
 
 const Container = styled.div`
   padding-bottom: 63px;
@@ -54,12 +53,10 @@ type StagePageProps = {
 const StagePage = ({ preview }: StagePageProps) => {
   const navigate = useNavigate();
   const methods = useStageForm();
-  const params = useParams();
-  const stageId = stringToNumber(params.stageId);
   const { initForm, isFormReady, inputs } = methods;
 
-  const { stageName, stageQuestionPage, userId, isCustom } =
-    useLoaderData() as StagePageLoaderData;
+  const { stageName, stageQuestionPage, userId, isCustom, stageId } =
+    useLoaderData() as LoaderData['StagePage'];
   const [questions, setQuestions] = useState<Question[]>();
   const { page, setTotalPages, hasNext, navigatorProps } = usePagination();
 
@@ -99,24 +96,27 @@ const StagePage = ({ preview }: StagePageProps) => {
 
   const submit = useCallback(() => {
     const nickname = sessionStorage.getItem(
-      SESSION_STORAGE_KEY.nickname(stageId),
+      SESSION_STORAGE_KEY.nickname(stageId, userId),
     );
-    sessionStorage.removeItem(SESSION_STORAGE_KEY.nickname(stageId));
+    sessionStorage.removeItem(SESSION_STORAGE_KEY.nickname(stageId, userId));
     navigate(`/stages/${stageId}/completed/${nickname}`);
-  }, [navigate, stageId]);
+  }, [navigate, stageId, userId]);
 
-  const handleClickShare = useCallback(async () => {
+  const handleClickShare = useCallback<
+    React.MouseEventHandler<HTMLButtonElement>
+  >(async e => {
+    e.preventDefault();
     const url = 'https://TODO.com';
     const result = await share({
-      title: '스테이지 공유하기',
+      title: `당신이 보는 내 모습은?`,
+      text: url,
       url: url,
-      text: stageName,
     });
     if (result !== 'SUCCEED') {
       const succeed = await copy(url);
       succeed && window.alert('클립보드에 복사하였습니다');
     }
-  }, [stageName]);
+  }, []);
 
   const isValid = useMemo(() => {
     const questionsIds = Object.keys(inputs).slice(
