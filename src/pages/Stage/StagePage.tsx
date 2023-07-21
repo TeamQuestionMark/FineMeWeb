@@ -12,7 +12,6 @@ import {
 import { Question } from '@/types/stage';
 import usePagination from '@/hooks/usePagination';
 import { useLoaderData, useNavigate, useParams } from 'react-router-dom';
-import { StageQuestionData } from '@/api/stages/questions';
 import getStageImage from '@/utils/getStageImage';
 import { COLORS } from '@/themes/colors';
 import { Body2 } from '@/components/Typography';
@@ -23,6 +22,7 @@ import { stringToNumber } from '@/utils/stringToNumber';
 import { SESSION_STORAGE_KEY } from '@/constants/storage';
 import PageNavigator from '@/components/PageNavigator';
 import { GLOBAL_PADDING_X } from '@/themes/layout';
+import { StagePageLoaderData } from '@/index';
 
 const Container = styled.div`
   padding-bottom: 63px;
@@ -58,9 +58,8 @@ const StagePage = ({ preview }: StagePageProps) => {
   const stageId = stringToNumber(params.stageId);
   const { initForm, isFormReady, inputs } = methods;
 
-  const { stageName, stageQuestionPage, userId } =
-    useLoaderData() as StageQuestionData;
-  const isCustom = useMemo(() => userId !== undefined, [userId]);
+  const { stageName, stageQuestionPage, userId, isCustom } =
+    useLoaderData() as StagePageLoaderData;
   const [questions, setQuestions] = useState<Question[]>();
   const { page, setTotalPages, hasNext, navigatorProps } = usePagination();
 
