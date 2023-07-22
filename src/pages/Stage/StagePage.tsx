@@ -15,13 +15,16 @@ import { useLoaderData, useNavigate } from 'react-router-dom';
 import getStageImage from '@/utils/getStageImage';
 import { COLORS } from '@/themes/colors';
 import { Body2 } from '@/components/Typography';
-import { PAGE_SIZE } from '@/constants/stage';
+import { PAGE_SIZE, SEARCH_PARAM_USER_ID } from '@/constants/stage';
 import share from '@/utils/share';
 import copy from '@/utils/copy';
 import { SESSION_STORAGE_KEY } from '@/constants/storage';
 import PageNavigator from '@/components/PageNavigator';
 import { GLOBAL_PADDING_X } from '@/themes/layout';
 import { LoaderData } from '@/router/types';
+import { AnswerApi } from '@/api/stages';
+import { StageAnwserPayload } from '@/api/stages/answer';
+import convertInputsToAnswers from './convertInputsToAnswers';
 
 const Container = styled.div`
   padding-bottom: 63px;
@@ -94,19 +97,29 @@ const StagePage = ({ preview }: StagePageProps) => {
     window.scrollTo(0, 0);
   }, [page]);
 
-  const submit = useCallback(() => {
+  const submit = useCallback(async () => {
     const nickname = sessionStorage.getItem(
       SESSION_STORAGE_KEY.nickname(stageId, userId),
+    ) as string;
+
+    const answerList = convertInputsToAnswers(
+      stageQuestionPage.content,
+      inputs,
     );
+
+    const payload: StageAnwserPayload = {
+      userId,
+      nickname,
+      answerList,
+    };
+
+    await AnswerApi.post(stageId, payload);
     sessionStorage.removeItem(SESSION_STORAGE_KEY.nickname(stageId, userId));
     navigate(`/stages/${stageId}/completed/${nickname}`);
-  }, [navigate, stageId, userId]);
+  }, [inputs, navigate, stageId, stageQuestionPage.content, userId]);
 
-  const handleClickShare = useCallback<
-    React.MouseEventHandler<HTMLButtonElement>
-  >(async e => {
-    e.preventDefault();
-    const url = 'https://TODO.com';
+  const handleClickShare = useCallback(async () => {
+    const url = `${process.env.REACT_APP_URL}/stages/${stageId}?${SEARCH_PARAM_USER_ID}=${userId}`;
     const result = await share({
       title: `당신이 보는 내 모습은?`,
       text: url,
@@ -147,6 +160,7 @@ const StagePage = ({ preview }: StagePageProps) => {
         </CustomStageTitle>
       )}
       <form
+        onSubmit={e => e.preventDefault()}
         style={
           preview || !isCustom ? { transform: 'translateY(-44px)' } : undefined
         }
