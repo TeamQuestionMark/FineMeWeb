@@ -1,4 +1,4 @@
-import App from '@/App';
+import NotFoundPage from '@/pages/NotFoundPage';
 import ResultPage from '@/pages/Result/ResultPage';
 import StageCompletedPage from '@/pages/Stage/StageCompletedPage';
 import StageLandingPage from '@/pages/Stage/StageLandingPage';
@@ -10,10 +10,6 @@ import { landingStageLoader, previewStageLoader, stageLoader } from './loader';
 
 const router = createBrowserRouter([
   {
-    path: '/',
-    element: <App />,
-  },
-  {
     path: '/typography',
     element: <TypographyPage />,
   },
@@ -22,27 +18,34 @@ const router = createBrowserRouter([
     element: <StageComponentsPage />,
   },
   {
-    path: '/result',
+    path: '/results/:uuid',
     element: <ResultPage />,
   },
   {
     path: '/stages/:stageId/preview',
     element: <StagePage preview />,
     loader: previewStageLoader,
+    errorElement: <NotFoundPage />,
   },
   {
     path: '/stages/:stageId',
     element: <StageLandingPage />,
     loader: landingStageLoader,
+    errorElement: <NotFoundPage />,
   },
   {
     path: '/stages/:stageId/questions',
     element: <StagePage />,
     loader: stageLoader,
+    errorElement: <NotFoundPage />,
   },
   {
     path: '/stages/:stageId/completed/:nickname',
     element: <StageCompletedPage />,
+  },
+  {
+    path: '*',
+    element: <NotFoundPage />,
   },
 ]);
 
