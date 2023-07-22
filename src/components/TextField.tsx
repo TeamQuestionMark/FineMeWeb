@@ -90,7 +90,11 @@ const TextField = React.forwardRef<TextFieldRef, TextFieldProps>(
       <div>
         {label && (
           <Body4
-            style={{ marginBottom: '6px', marginLeft: '10px' }}
+            style={{
+              marginBottom: '6px',
+              marginLeft: '10px',
+              display: 'block',
+            }}
             element={'label'}
             htmlFor={textInputProps.id || textInputProps.name}
           >
