@@ -55,6 +55,7 @@ const StageLandingPage = () => {
           label="닉네임"
           placeholder="최소2~8자의 닉네임을 입력해주세요"
           noSpaces
+          maxLength={8}
           validator={validator}
           onInput={handleInput}
         />
