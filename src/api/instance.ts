@@ -16,7 +16,7 @@ export interface Pagination<T> {
 }
 
 const api = axios.create({
-  withCredentials: true,
+  withCredentials: false,
   baseURL: process.env.REACT_APP_API_BASE_URL + '/api/v1',
   headers: {
     'x-ncp-apigw-api-key': process.env.REACT_APP_API_KEY,
