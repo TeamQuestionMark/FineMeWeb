@@ -1,7 +1,7 @@
 import terms from './terms';
 
 interface TermsPageProps {
-  type: 'privacy' | 'service';
+  type: keyof typeof terms;
 }
 
 const TermsPage: React.FC<TermsPageProps> = ({ type }) => {
