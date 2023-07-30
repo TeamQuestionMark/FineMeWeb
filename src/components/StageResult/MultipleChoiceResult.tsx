@@ -1,3 +1,4 @@
+import { MultipleChoiceAnswerResult } from '@/types/answer';
 import styled from 'styled-components';
 import ChoiceResultAccordion from './ChoiceResultAccordion';
 import QuestionBox from './QuestionBox';
@@ -9,24 +10,23 @@ const StyledMultipleChoiceResult = styled.ol`
 `;
 interface MultipleChoiceResultProps {
   questionTitle: string;
+  answerResults: MultipleChoiceAnswerResult;
 }
 const MultipleChoiceResult: React.FC<MultipleChoiceResultProps> = ({
   questionTitle,
+  answerResults,
 }) => {
   return (
     <div>
       <QuestionBox questionTitle={questionTitle} />
       <StyledMultipleChoiceResult>
-        <ChoiceResultAccordion
-          content={`지각할 것 같다고 솔직하게
-메신저에 고백한다`}
-          nicknames={[]}
-        />
-        <ChoiceResultAccordion
-          content={`자연스러운 핑계 발견! 커피 사서
-들어가겠다며 주문을 받는다`}
-          nicknames={['김재현']}
-        />
+        {Object.entries(answerResults).map(([answer, nicknames], idx) => (
+          <ChoiceResultAccordion
+            key={idx}
+            content={answer}
+            nicknames={nicknames}
+          />
+        ))}
       </StyledMultipleChoiceResult>
     </div>
   );

@@ -129,7 +129,7 @@ const StagePage = ({ preview }: StagePageProps) => {
       const succeed = await copy(url);
       succeed && window.alert('클립보드에 복사하였습니다');
     }
-  }, []);
+  }, [stageId, userId]);
 
   const isValid = useMemo(() => {
     const questionsIds = Object.keys(inputs).slice(
