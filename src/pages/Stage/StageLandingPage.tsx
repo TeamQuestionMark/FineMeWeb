@@ -1,9 +1,11 @@
+import { AnswerApi } from '@/api/stages';
 import Button from '@/components/Button';
 import PageLayout from '@/components/Layout/PageLayout';
 import TextField, { TextFieldRef } from '@/components/TextField';
 import { Headline2 } from '@/components/Typography';
 import { SESSION_STORAGE_KEY } from '@/constants/storage';
 import { LoaderData } from '@/router/types';
+import { useToastStore } from '@/store/toast';
 import Validator from '@/utils/Validator';
 import { useRef, useState } from 'react';
 import { useLoaderData, useNavigate } from 'react-router-dom';
@@ -25,6 +27,7 @@ const StageLandingPage = () => {
   const [isValid, setIsValid] = useState(false);
   const inputRef = useRef<TextFieldRef>(null);
   const { userId, stageId } = useLoaderData() as LoaderData['StageLandingPage'];
+  const { setToast } = useToastStore();
 
   const handleInput: React.FormEventHandler<HTMLInputElement> = async e => {
     setNickname(e.currentTarget.value);
@@ -33,7 +36,18 @@ const StageLandingPage = () => {
     setIsValid(isValid);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
+    const isDuplicated = await AnswerApi.checkNickname({
+      stageId,
+      userId,
+      nickname,
+    });
+
+    if (isDuplicated) {
+      setToast('중복된 닉네임입니다. 다른 닉네임을 사용해주세요.');
+      return;
+    }
+
     sessionStorage.setItem(
       SESSION_STORAGE_KEY.nickname(stageId, userId),
       nickname,
