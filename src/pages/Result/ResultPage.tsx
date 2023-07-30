@@ -14,21 +14,21 @@ const StyledResultWrapper = styled.div`
   }
 `;
 const ResultPage = () => {
-  // const { questionData, answerData } =
-  //   useLoaderData() as LoaderData['ResultPage'];
+  const { questionData, answerData } =
+    useLoaderData() as LoaderData['ResultPage'];
 
-  // const isCustom = useMemo(
-  //   () => !Object.values(BASIC_STAGE_ID).includes(answerData.stageId as any),
-  //   [answerData.stageId],
-  // );
+  const isCustom = useMemo(
+    () => !Object.values(BASIC_STAGE_ID).includes(answerData.stageId as any),
+    [answerData.stageId],
+  );
   return (
     <PageLayout>
-      {/* <Headline2 style={{ marginBottom: '16px' }}>
+      <Headline2 style={{ marginBottom: '16px' }}>
         {(!isCustom &&
           renderMultiLineText(`${questionData.stageName}에서
 일하는 나의 모습은?`)) ||
           renderMultiLineText(questionData.stageName)}
-      </Headline2> */}
+      </Headline2>
       <StyledResultWrapper>
         <ResultRenderer />
       </StyledResultWrapper>

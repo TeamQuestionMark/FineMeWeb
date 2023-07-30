@@ -18,7 +18,7 @@ export const dummyAnswerResults = dummyQuestions.map(quesiton => {
   let dummyResult: AnswerResult = {
     questionId: quesiton.questionId,
     multipleChoiceAnswerResult: {},
-    oxAnswerResult: {},
+    oxAnswerResult: { O: [], X: [] },
     subjectiveAnswerResult: [],
   };
 

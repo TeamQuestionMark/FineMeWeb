@@ -15,12 +15,17 @@ export type SubjectiveAnswerResult = {
   answerText: string;
 };
 
+export type OxAnswerResult = {
+  O: Nickname[];
+  X: Nickname[];
+};
+
 export type MultipleChoiceAnswerResult = {
-  [answer: string]: Nickname[];
+  [choiceContent: string]: Nickname[];
 };
 export interface AnswerResult {
   questionId: number;
   subjectiveAnswerResult: SubjectiveAnswerResult[];
   multipleChoiceAnswerResult: MultipleChoiceAnswerResult;
-  oxAnswerResult: MultipleChoiceAnswerResult;
+  oxAnswerResult: OxAnswerResult;
 }

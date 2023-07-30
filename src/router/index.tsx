@@ -7,7 +7,12 @@ import StageComponentsPage from '@/pages/StageComponentsPage';
 import TermsPage from '@/pages/Terms/TermsPage';
 import TypographyPage from '@/pages/TypographyPage';
 import { createBrowserRouter } from 'react-router-dom';
-import { landingStageLoader, previewStageLoader, stageLoader } from './loader';
+import {
+  landingStageLoader,
+  previewStageLoader,
+  resultLoader,
+  stageLoader,
+} from './loader';
 
 const router = createBrowserRouter([
   {
@@ -29,6 +34,8 @@ const router = createBrowserRouter([
   {
     path: '/results/:uuid',
     element: <ResultPage />,
+    loader: resultLoader,
+    errorElement: <NotFoundPage />,
   },
   {
     path: '/stages/:stageId/preview',

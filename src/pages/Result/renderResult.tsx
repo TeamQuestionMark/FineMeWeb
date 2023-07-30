@@ -1,6 +1,6 @@
 import MultipleChoiceResult from '@/components/StageResult/MultipleChoiceResult';
 import SubjectiveResult from '@/components/StageResult/SubjectiveResult';
-import { AnswerResult } from '@/types/answer';
+import { AnswerResult, MultipleChoiceAnswerResult } from '@/types/answer';
 import { Question } from '@/types/stage';
 
 export default function renderResult(question: Question, answer: AnswerResult) {
@@ -20,12 +20,19 @@ export default function renderResult(question: Question, answer: AnswerResult) {
         answerResults={answer.oxAnswerResult}
       />
     );
-  else
-    return (
-      <MultipleChoiceResult
-        key={question.questionId}
-        questionTitle={question.questionTitle}
-        answerResults={answer.multipleChoiceAnswerResult}
-      />
-    );
+
+  const answerResults: MultipleChoiceAnswerResult = {};
+  question.multipleChoiceList.forEach(choice => {
+    const nicknames =
+      answer.multipleChoiceAnswerResult[choice.multipleChoiceId] || [];
+    answerResults[choice.content] = nicknames;
+  });
+
+  return (
+    <MultipleChoiceResult
+      key={question.questionId}
+      questionTitle={question.questionTitle}
+      answerResults={answerResults}
+    />
+  );
 }
