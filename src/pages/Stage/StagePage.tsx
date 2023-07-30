@@ -64,6 +64,7 @@ const StagePage = ({ preview }: StagePageProps) => {
     useLoaderData() as LoaderData['StagePage'];
   const [questions, setQuestions] = useState<Question[]>();
   const { page, setTotalPages, hasNext, navigatorProps } = usePagination();
+  const [loading, setLoading] = useState(false);
 
   const questionStartIdx: number = useMemo(() => {
     return PAGE_SIZE * (page - 1);
@@ -120,6 +121,7 @@ const StagePage = ({ preview }: StagePageProps) => {
       setToast(`스테이지 문항을 모두 완성해주세요.`);
       return;
     }
+    setLoading(true);
     const nickname = sessionStorage.getItem(
       SESSION_STORAGE_KEY.nickname(stageId, userId),
     ) as string;
@@ -135,7 +137,7 @@ const StagePage = ({ preview }: StagePageProps) => {
       answerList,
     };
 
-    await AnswerApi.post(stageId, payload);
+    await AnswerApi.post(stageId, payload).finally(() => setLoading(false));
     sessionStorage.removeItem(SESSION_STORAGE_KEY.nickname(stageId, userId));
     navigate(`/stages/${stageId}/completed/${nickname}`);
   }, [
@@ -191,9 +193,10 @@ const StagePage = ({ preview }: StagePageProps) => {
         {!preview && !hasNext && (
           <Button
             style={{ margin: `30px ${GLOBAL_PADDING_X}px 0 ` }}
+            disabled={loading}
             onClick={submit}
           >
-            응답 완료
+            {!loading ? '응답 완료' : '응답 중'}
           </Button>
         )}
         {preview && !hasNext && (
