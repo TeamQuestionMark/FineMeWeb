@@ -1,9 +1,9 @@
-import { QuestionsApi } from '@/api/stages';
+import { AnswerApi, QuestionsApi } from '@/api/stages';
 import { SEARCH_PARAM_USER_ID } from '@/constants/stage';
 import { SESSION_STORAGE_KEY } from '@/constants/storage';
 import { stringToNumber } from '@/utils/stringToNumber';
 import { LoaderFunction, LoaderFunctionArgs, redirect } from 'react-router-dom';
-import { ReturnLoadStage } from './types';
+import { ReturnLoadStage, ReturnResultLoader } from './types';
 
 async function loadStage({
   params,
@@ -34,7 +34,10 @@ async function loadStage({
 
 export const previewStageLoader = loadStage;
 export const landingStageLoader = loadStage;
-export const stageLoader: LoaderFunction = async ({ params, request }) => {
+export const stageLoader: LoaderFunction = async ({
+  params,
+  request,
+}): Promise<ReturnLoadStage | Response> => {
   const loaderData = await loadStage({ params, request });
   const { userId, stageId } = loaderData;
   const nickname = sessionStorage.getItem(
@@ -46,4 +49,17 @@ export const stageLoader: LoaderFunction = async ({ params, request }) => {
     return redirect(`/stages/${stageId}?${SEARCH_PARAM_USER_ID}=${userId}`);
 
   return loaderData;
+};
+
+export const resultLoader: LoaderFunction = async ({
+  params,
+  request,
+}): Promise<ReturnResultLoader> => {
+  const uuid = params.uuid;
+  if (!uuid) throw Error();
+
+  const answers = await AnswerApi.get(uuid);
+  const questions = await QuestionsApi.get(answers.stageId, 1, 100);
+
+  return { answers, questions };
 };
