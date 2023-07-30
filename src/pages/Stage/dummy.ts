@@ -144,8 +144,10 @@ export const dummyPagninatedQuetions = (
   page: number = 1,
   size: number = 5,
 ): Pagination<Question[]> => ({
-  contents: dummyQuestions.slice(size * (page - 1), size * page),
-  page: page,
-  totalCount: dummyQuestions.length,
+  content: dummyQuestions.slice(size * (page - 1), size * page),
+  number: page,
+  totalElements: dummyQuestions.length,
   totalPages: 3,
+  numberOfElements: dummyQuestions.length,
+  size: size,
 });

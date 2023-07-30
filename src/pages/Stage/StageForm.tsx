@@ -8,28 +8,28 @@ import ChipTypeInput from '../../components/Question/ChipTypeInput';
 import CheckBoxTypeInput from '../../components/Question/CheckBoxTypeInput';
 import OXButtonGroup from '../../components/OXButtonGroup';
 import RadioTypeInput from '../../components/Question/RadioTypeInput';
-import TextField from '../../components/TextField';
 import Validator from '@/utils/Validator';
+import TextArea from '@/components/TextArea';
+import TextField from '@/components/TextField';
 
 interface StageFormProps extends PropsWithChildren {
+  custom?: boolean;
   questions: Question[];
   useStageForm: ReturnType<typeof useStageForm>;
   startNumber: number;
 }
 
 const Container = styled.ol`
-  border-radius: 15px;
-  border: 2px solid ${COLORS.gray900};
   background: ${COLORS.white};
-
   width: 100%;
   display: flex;
   flex-direction: column;
   row-gap: 40px;
-  padding: 44px 24px 31px 20px;
+  padding: 0 31px 0 24px;
 `;
 
 const StageForm = ({
+  custom,
   questions,
   useStageForm,
   startNumber,
@@ -76,7 +76,7 @@ const StageForm = ({
             />
           );
         case 'SUBJECTIVE':
-          return (
+          return !custom ? (
             <TextField
               name={question.questionId.toString()}
               onInput={e =>
@@ -84,11 +84,23 @@ const StageForm = ({
               }
               validator={new Validator().required()}
               placeholder="답변을 입력해주세요"
+              defaultValue={inputs[question.questionId].toString()}
+            />
+          ) : (
+            <TextArea
+              onInput={e =>
+                onInput(e.currentTarget.name, e.currentTarget.value)
+              }
+              validator={new Validator().max(100).required()}
+              maxLength={100}
+              placeholder="1~100자까지 작성할 수 있습니다."
+              height={45}
+              defaultValue={inputs[question.questionId].toString()}
             />
           );
       }
     },
-    [inputs, onInput],
+    [custom, inputs, onInput],
   );
   return (
     <Container>

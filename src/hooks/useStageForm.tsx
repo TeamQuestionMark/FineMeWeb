@@ -39,28 +39,7 @@ export default function useStageForm() {
     return true;
   }, [inputs, isFormReady]);
 
-  const validate = useCallback(
-    (inputIndices: number[]) => {
-      if (!isFormReady) return false;
-      for (
-        let idx = inputIndices[0];
-        idx <= inputIndices[inputIndices.length - 1];
-        idx++
-      ) {
-        const value = inputs[idx];
-        if (value === undefined) return false;
-        if (typeof value !== 'number') {
-          if (value.length === 0) {
-            return false;
-          }
-        }
-      }
-      return true;
-    },
-    [inputs, isFormReady],
-  );
-
-  return { inputs, isCompleted, onInput, initForm, isFormReady, validate };
+  return { inputs, isCompleted, onInput, initForm, isFormReady };
 }
 
 function makeNewMultipleChoice<T>(inputs: T, name: keyof T, value: number) {

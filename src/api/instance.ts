@@ -7,14 +7,16 @@ export interface ResponseData<T> {
 }
 
 export interface Pagination<T> {
-  contents: T;
-  page: number;
-  totalCount: number;
+  content: T;
+  size: number;
+  number: number;
+  numberOfElements: number;
+  totalElements: number;
   totalPages: number;
 }
 
 const api = axios.create({
-  withCredentials: true,
+  withCredentials: false,
   baseURL: process.env.REACT_APP_API_BASE_URL + '/api/v1',
   headers: {
     'x-ncp-apigw-api-key': process.env.REACT_APP_API_KEY,
