@@ -58,8 +58,8 @@ export const resultLoader: LoaderFunction = async ({
   const uuid = params.uuid;
   if (!uuid) throw Error();
 
-  const answers = await AnswerApi.get(uuid);
-  const questions = await QuestionsApi.get(answers.stageId, 1, 100);
+  const answerData = await AnswerApi.get(uuid);
+  const questionData = await QuestionsApi.get(answerData.stageId, 1, 100);
 
-  return { answers, questions };
+  return { answerData, questionData };
 };

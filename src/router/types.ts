@@ -7,8 +7,8 @@ export interface ReturnLoadStage extends QuestionsApi.StageQuestionData {
 }
 
 export interface ReturnResultLoader {
-  answers: AnswerApi.StageAnswerData;
-  questions: QuestionsApi.StageQuestionData;
+  answerData: AnswerApi.StageAnswerData;
+  questionData: QuestionsApi.StageQuestionData;
 }
 
 export interface LoaderData {
