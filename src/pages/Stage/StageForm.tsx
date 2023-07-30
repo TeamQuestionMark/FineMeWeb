@@ -84,6 +84,7 @@ const StageForm = ({
               }
               validator={new Validator().required()}
               placeholder="답변을 입력해주세요"
+              defaultValue={inputs[question.questionId].toString()}
             />
           ) : (
             <TextArea
@@ -94,6 +95,7 @@ const StageForm = ({
               maxLength={100}
               placeholder="1~100자까지 작성할 수 있습니다."
               height={45}
+              defaultValue={inputs[question.questionId].toString()}
             />
           );
       }

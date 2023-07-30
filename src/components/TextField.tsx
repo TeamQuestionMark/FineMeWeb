@@ -6,6 +6,7 @@ import React, {
   HTMLInputTypeAttribute,
   SetStateAction,
   useCallback,
+  useEffect,
   useImperativeHandle,
   useRef,
   useState,
@@ -25,10 +26,14 @@ interface TextFieldProps extends React.HTMLProps<HTMLInputElement> {
   label?: string;
   type?: HTMLInputTypeAttribute;
   noSpaces?: boolean;
+  defaultValue?: string;
 }
 
 const TextField = React.forwardRef<TextFieldRef, TextFieldProps>(
-  ({ onInput, validator, label, noSpaces, ...textInputProps }, ref) => {
+  (
+    { onInput, validator, label, noSpaces, defaultValue, ...textInputProps },
+    ref,
+  ) => {
     const inputRef = useRef<HTMLInputElement>(null);
     const [touched, setTouched] = useState(false);
     const [isValid, setIsValid] = useState<boolean>(true);
@@ -39,6 +44,11 @@ const TextField = React.forwardRef<TextFieldRef, TextFieldProps>(
       setIsValid,
       validate,
     }));
+
+    useEffect(() => {
+      if (inputRef.current && defaultValue)
+        inputRef.current.value = defaultValue;
+    }, [defaultValue]);
 
     /** validator prop이 있을 경우 onChangeText, onBlur, onFocus 시 유효성 검증 및 status 업데이트 */
     const validate = useCallback(
