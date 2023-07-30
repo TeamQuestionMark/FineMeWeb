@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import IconAnswer from '@/assets/icons/AnswerBox/icon-answer@3x.png';
 import { Body1, Body2 } from '../Typography';
 import QuestionBox from './QuestionBox';
+import { SubjectiveAnswerResult } from '@/types/answer';
 
 const StyledSubjectiveResult = styled.ol`
   display: flex;
@@ -45,16 +46,23 @@ const Answer: React.FC<AnswerProps> = ({ answer, nickname }) => {
 
 interface SubjectiveResultProps {
   questionTitle: string;
+  answerResults: SubjectiveAnswerResult[];
 }
 const SubjectiveResult: React.FC<SubjectiveResultProps> = ({
   questionTitle,
+  answerResults,
 }) => {
   return (
     <div>
       <QuestionBox questionTitle={questionTitle} />
       <StyledSubjectiveResult>
-        <Answer answer="탕수육은 부먹으로 먹던데" nickname="김재현" />
-        <Answer answer="탕수육은 부먹으로 먹던데" nickname="김재현" />
+        {answerResults.map((result, idx) => (
+          <Answer
+            key={idx}
+            answer={result.answerText}
+            nickname={result.nickname}
+          />
+        ))}
       </StyledSubjectiveResult>
     </div>
   );

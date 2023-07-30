@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import ImgStageCompleted from '@/assets/images/Stage/stage-completed@3x.png';
 import { GLOBAL_PADDING_X } from '@/themes/layout';
+import checkDeviceType from '@/utils/checkDeviceType';
 
 const Container = styled.div`
   height: 100vh;
@@ -36,7 +37,18 @@ const StageCompletedPage = () => {
   const nickname = params.nickname;
 
   const goToApp = () => {
-    window.open();
+    const device = checkDeviceType();
+    switch (device) {
+      case 'ANDROID':
+        window.open(process.env.REACT_APP_ANDROID_APP_URL);
+        break;
+      case 'IOS':
+        window.open(process.env.REACT_APP_IOS_APP_URL);
+        break;
+      default:
+        window.open(process.env.REACT_APP_ANDROID_APP_URL);
+        break;
+    }
   };
 
   return (

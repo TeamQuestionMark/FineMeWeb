@@ -10,11 +10,3 @@ export type ChoiceOption = {
   multipleChoiceId: number;
   content: string;
 };
-
-export type Answer = {
-  questionId: number;
-  type: QuestionType;
-  multipleChoiceIdList: number[];
-  answerText: string;
-  answerChoice: string;
-};

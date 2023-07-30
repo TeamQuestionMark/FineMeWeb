@@ -6,6 +6,7 @@ import React, {
   HTMLInputTypeAttribute,
   SetStateAction,
   useCallback,
+  useEffect,
   useImperativeHandle,
   useRef,
   useState,
@@ -25,11 +26,20 @@ interface TextAreaProps extends React.HTMLProps<HTMLTextAreaElement> {
   label?: string;
   type?: HTMLInputTypeAttribute;
   noSpaces?: boolean;
+  defaultValue?: string;
 }
 
 const TextArea = React.forwardRef<TextAreaRef, TextAreaProps>(
   (
-    { onInput, validator, label, noSpaces, maxLength = 100, ...textInputProps },
+    {
+      onInput,
+      validator,
+      label,
+      noSpaces,
+      maxLength = 100,
+      defaultValue,
+      ...textInputProps
+    },
     ref,
   ) => {
     const inputRef = useRef<HTMLTextAreaElement>(null);
@@ -44,6 +54,10 @@ const TextArea = React.forwardRef<TextAreaRef, TextAreaProps>(
       validate,
     }));
 
+    useEffect(() => {
+      if (inputRef.current && defaultValue)
+        inputRef.current.value = defaultValue;
+    }, [defaultValue]);
     /** validator prop이 있을 경우 onChangeText, onBlur, onFocus 시 유효성 검증 및 status 업데이트 */
     const validate = useCallback(
       async (text?: string) => {

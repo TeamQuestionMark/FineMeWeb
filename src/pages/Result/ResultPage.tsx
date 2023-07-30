@@ -1,9 +1,12 @@
 import PageLayout from '@/components/Layout/PageLayout';
-import MultipleChoiceResult from '@/components/StageResult/MultipleChoiceResult';
-import SubjectiveResult from '@/components/StageResult/SubjectiveResult';
 import { Headline2 } from '@/components/Typography';
+import { BASIC_STAGE_ID } from '@/constants/stage';
+import { LoaderData } from '@/router/types';
 import renderMultiLineText from '@/utils/renderMultiLineText';
+import { useMemo } from 'react';
+import { useLoaderData } from 'react-router-dom';
 import styled from 'styled-components';
+import ResultRenderer from './ResultRenderer';
 
 const StyledResultWrapper = styled.div`
   > div {
@@ -11,18 +14,23 @@ const StyledResultWrapper = styled.div`
   }
 `;
 const ResultPage = () => {
+  const { questionData, answerData } =
+    useLoaderData() as LoaderData['ResultPage'];
+
+  const isCustom = useMemo(
+    () => !Object.values(BASIC_STAGE_ID).includes(answerData.stageId as any),
+    [answerData.stageId],
+  );
   return (
     <PageLayout>
       <Headline2 style={{ marginBottom: '16px' }}>
-        {renderMultiLineText(`회사에서
-일하는 나의 모습은?`)}
+        {(!isCustom &&
+          renderMultiLineText(`${questionData.stageName}에서
+일하는 나의 모습은?`)) ||
+          renderMultiLineText(questionData.stageName)}
       </Headline2>
       <StyledResultWrapper>
-        <SubjectiveResult questionTitle="나는 탕수육을 어떻게 먹을까?" />
-        <MultipleChoiceResult
-          questionTitle={`지각이 예상되는 출근길..!
-아침 회의가 잡힐 분위기다!`}
-        />
+        <ResultRenderer />
       </StyledResultWrapper>
     </PageLayout>
   );

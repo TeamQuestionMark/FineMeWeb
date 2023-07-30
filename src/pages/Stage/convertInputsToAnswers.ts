@@ -1,4 +1,5 @@
-import { Answer, Question, QuestionType } from '@/types/stage';
+import { Answer } from '@/types/answer';
+import { Question, QuestionType } from '@/types/stage';
 
 const getAnswerByType = (
   type: QuestionType,

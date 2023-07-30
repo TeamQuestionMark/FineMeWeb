@@ -20,7 +20,7 @@ const StyledToast = styled.div<{ isVisible: boolean }>`
   background-color: ${COLORS.error30};
   box-shadow: 0px 4px 15px 0px rgba(0, 0, 0, 0.16);
 
-  width: 90%;
+  width: fit-content;
   text-align: center;
 
   @keyframes fade {
