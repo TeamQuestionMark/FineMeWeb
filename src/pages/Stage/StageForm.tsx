@@ -88,6 +88,7 @@ const StageForm = ({
             />
           ) : (
             <TextArea
+              name={question.questionId.toString()}
               onInput={e =>
                 onInput(e.currentTarget.name, e.currentTarget.value)
               }
