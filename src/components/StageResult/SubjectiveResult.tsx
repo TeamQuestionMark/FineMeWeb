@@ -22,7 +22,7 @@ const StyledAnswer = styled.li`
 `;
 
 const IconA = styled.div`
-  width: 22px;
+  min-width: 22px;
   height: 22px;
   background-image: url(${IconAnswer});
   background-size: cover;

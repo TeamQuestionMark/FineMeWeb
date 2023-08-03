@@ -19,7 +19,7 @@ const StyledQuestionBox = styled.div`
 `;
 
 const IconQ = styled.div`
-  width: 22px;
+  min-width: 22px;
   height: 22px;
   background-image: url(${IconQuestion});
   background-size: cover;
