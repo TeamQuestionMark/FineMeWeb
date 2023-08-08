@@ -23,3 +23,19 @@ export const get = async (uuid: string) => {
   );
   return data.data;
 };
+
+type CheckNicknameParam = {
+  nickname: string;
+  stageId: number;
+  userId: number;
+};
+type CheckNicknameData = {
+  isDuplicated: boolean;
+};
+export const checkNickname = async (param: CheckNicknameParam) => {
+  const { stageId, userId, nickname } = param;
+  const { data } = await api.get<ResponseData<CheckNicknameData>>(
+    `/stages/${stageId}/answer/check-nickname?userId=${userId}&nickname=${nickname}`,
+  );
+  return data.data.isDuplicated;
+};

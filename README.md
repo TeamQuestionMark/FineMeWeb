@@ -1,46 +1,16 @@
-# Getting Started with Create React App
+![Fine Me](public/image_about_fineme.png)
+![GitHub package.json version](https://img.shields.io/github/package-json/v/TeamQuestionMark/FineMeApp?style=flat-square)
+![react](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fgithub.com%2FTeamQuestionMark%2FFineMeApp%2Fraw%2Fmain%2Fpackage.json&query=%24.dependencies%5B'react'%5D&logo=React&logoColor=%2300D3FF&label=React&color=%2300D3FF)
+![typescript](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fgithub.com%2FTeamQuestionMark%2FFineMeApp%2Fraw%2Fmain%2Fpackage.json&query=%24.devDependencies.typescript&logo=Typescript&logoColor=%231976D2&label=typescript&color=%231976D2)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+> 괜찮은 나를 찾기 위한 소셜 퀴즈 모바일 앱 - 웹뷰
 
-## Available Scripts
+## ✨ Feature
 
-In the project directory, you can run:
+- 스테이지 응답하기
+- 스테이지 결과 확인
 
-### `npm start`
+## 🚀 Demo
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+- [[스테이지 답변하기] 친구와 있는 내 모습은?](https://findfine.me/stages/2/questions?user_id=448)
+- [[스테이지 결과 확인하기] 다른 사람이 보는 내 모습은?](https://findfine.me/results/0999fcfb-47b9-42e9-99bd-eaf4bf5d9e0a)
