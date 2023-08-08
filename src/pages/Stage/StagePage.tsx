@@ -118,7 +118,7 @@ const StagePage = ({ preview }: StagePageProps) => {
 
   const submit = useCallback(async () => {
     if (invalidQuestionNumber) {
-      setToast(`스테이지 문항을 모두 완성해주세요.`);
+      setToast(`${invalidQuestionNumber}번 문항을 완성해주세요.`);
       return;
     }
     setLoading(true);
