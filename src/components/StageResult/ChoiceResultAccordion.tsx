@@ -27,13 +27,14 @@ const StyledHeaderLeft = styled.div`
 `;
 
 const IconA = styled.div`
-  width: 22px;
+  min-width: 22px;
   height: 22px;
   background-image: url(${IconAnswer});
   background-size: cover;
 `;
 
 const StyledNumberLabel = styled.span`
+  white-space: nowrap;
   border-radius: 5px;
   background: ${COLORS.brandColor200};
   padding: 2px 5px;

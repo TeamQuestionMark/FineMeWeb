@@ -118,7 +118,7 @@ const StagePage = ({ preview }: StagePageProps) => {
 
   const submit = useCallback(async () => {
     if (invalidQuestionNumber) {
-      setToast(`스테이지 문항을 모두 완성해주세요.`);
+      setToast(`${invalidQuestionNumber}번 문항을 완성해주세요.`);
       return;
     }
     setLoading(true);
@@ -154,7 +154,7 @@ const StagePage = ({ preview }: StagePageProps) => {
     const url = `${process.env.REACT_APP_URL}/stages/${stageId}?${SEARCH_PARAM_USER_ID}=${userId}`;
     const result = await share({
       title: `당신이 보는 내 모습은?`,
-      text: url,
+      text: '스테이지 공유하기',
       url: url,
     });
     if (result !== 'SUCCEED') {
